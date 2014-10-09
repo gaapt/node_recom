@@ -1,0 +1,21 @@
+<section data-ng-controller="RecomsController" data-ng-init="find()">
+  <ul class="recoms unstyled">
+    <li data-ng-repeat="recom in recoms">
+      <span>{{recom.created | date:'medium'}}</span> /
+      <span>{{recom.user.name}}</span>
+      <h2>
+        <a data-ng-href="#!/recommendations/{{recom._id}}">{{recom.title}}</a>
+        <span data-ng-if="hasAuthorization(recom)">
+          <a class="btn" href="/#!/recommendations/{{recom._id}}/edit">
+            <i class="glyphicon glyphicon-edit"></i>
+          </a>
+          <a class="btn" data-ng-click="remove(recom);">
+            <i class="glyphicon glyphicon-trash"></i>
+          </a>
+        </span>
+      </h2>
+      <div>{{recom.content}}</div>
+    </li>
+  </ul>
+  <h1 data-ng-hide="!recoms || recoms.length">No recommendations yet. <br> Why don't you <a href="/#!/recommendations/create">Create One</a>?</h1>
+</section>

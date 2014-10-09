@@ -1,0 +1,14 @@
+<section data-ng-controller="RecomsController" data-ng-init="findOne()">
+	<span>{{recom.created | date:'medium'}}</span> /
+	<span>{{recom.user.name}}</span>
+	<h2>{{recom.title}}</h2>
+	<div data-ng-if="hasAuthorization(recom)">
+		<a class="btn" href="/#!/recommendations/{{recom._id}}/edit">
+			<i class="glyphicon glyphicon-edit"></i>
+		</a>
+		<a class="btn" data-ng-click="remove(recom);">
+			<i class="glyphicon glyphicon-trash"></i>
+		</a>
+	</div>
+	<div>{{recom.content}}</div>
+</section>
