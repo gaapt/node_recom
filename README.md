@@ -117,14 +117,3 @@ To simply run tests
     $ npm test
 
 > NOTE: Running Node.js applications in the __production__ environment enables caching, which is disabled by default in all other environments.
-
-## Getting Started
-We pre-included an article example. Check out:
-
-  * [The Model](packages/articles/server/models/article.js) - Where we define our object schema.
-  * [The Controller](packages/articles/server/controllers/articles.js) - Where we take care of our backend logic.
-  * [NodeJS Routes](packages/articles/server/routes/articles.js) - Where we define our REST service routes.
-  * [AngularJs Routes](packages/articles/public/routes/articles.js) - Where we define our CRUD routes.
-  * [The AngularJs Service](packages/articles/public/services/articles.js) - Where we connect to our REST service.
-  * [The AngularJs Controller](packages/articles/public/controllers/articles.js) - Where we take care of  our frontend logic.
-  * [The AngularJs Views Folder](packages/articles/public/views) - Where we keep our CRUD views.
