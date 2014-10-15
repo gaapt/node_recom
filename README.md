@@ -1,9 +1,4 @@
-# [![MEAN Logo](http://www.mean.io/img/logos/meanlogo.png)](http://mean.io/) MEAN Stack
-
-[![Build Status](https://travis-ci.org/linnovate/mean.svg?branch=master)](https://travis-ci.org/linnovate/mean)
-[![Dependencies Status](https://david-dm.org/linnovate/mean.svg)](https://david-dm.org/linnovate/mean)
-
-MEAN is a boilerplate that provides a nice starting point for [MongoDB](http://www.mongodb.org/), [Node.js](http://www.nodejs.org/), [Express](http://expressjs.com/), and [AngularJS](http://angularjs.org/) based applications. It is designed to give you a quick and organized way to start developing MEAN based web apps with useful modules like Mongoose and Passport pre-bundled and configured. We mainly try to take care of the connection points between existing popular frameworks and solve common integration problems.
+# Base Recommendations
 
 ## Prerequisites
 * Node.js - Download and Install [Node.js](http://www.nodejs.org/download/). You can also follow [this gist](https://gist.github.com/isaacs/579814) for a quick and easy way to install Node.js and npm
@@ -30,32 +25,6 @@ $ npm install -g grunt-cli
 * AngularJS - Defined as bower module in the [bower.json](bower.json) file.
 * Twitter Bootstrap - Defined as bower module in the [bower.json](bower.json) file.
 * UI Bootstrap - Defined as bower module in the [bower.json](bower.json) file.
-
-## Quick Install
-  The quickest way to get started with MEAN is to install the `meanio` package from NPM.
-
-  Install MEAN CLI:
-
-    $ [sudo] npm install -g meanio@latest
-    $ mean init <myApp>
-    $ cd <myApp> && npm install
-
-  We recommend using [Grunt](https://github.com/gruntjs/grunt-cli) to start the server:
-
-    $ grunt
-
-  If grunt aborts because of JSHINT errors, these can be overridden with the `force` flag:
-
-    $ grunt -f
-
-  Alternatively, when not using `grunt` you can run:
-
-    $ node server
-
-  Then, open a browser and go to:
-
-    http://localhost:3000
-
 
 ## Troubleshooting
 During install some of you may encounter some issues.
@@ -149,17 +118,6 @@ To simply run tests
 
 > NOTE: Running Node.js applications in the __production__ environment enables caching, which is disabled by default in all other environments.
 
-## Maintaining your own repository
-After initializing a project, you'll see that the root directory of your project is already a git repository. MEAN uses git to download and update its own code. To handle its own operations, MEAN creates a remote called `upstream`. This way you can use git as you would in any other project.
-
-To maintain your own public or private repository, add your repository as remote. See here for information on [adding an existing project to GitHub](https://help.github.com/articles/adding-an-existing-project-to-github-using-the-command-line).
-
-```
-git remote add origin <remote repository URL>
-git push -u origin master
-```
-
-
 ## Getting Started
 We pre-included an article example. Check out:
 
@@ -170,28 +128,3 @@ We pre-included an article example. Check out:
   * [The AngularJs Service](packages/articles/public/services/articles.js) - Where we connect to our REST service.
   * [The AngularJs Controller](packages/articles/public/controllers/articles.js) - Where we take care of  our frontend logic.
   * [The AngularJs Views Folder](packages/articles/public/views) - Where we keep our CRUD views.
-
-## Heroku Quick Deployment
-Before you start make sure you have the [Heroku toolbelt](https://toolbelt.heroku.com/)
-installed and an accessible MongoDB instance - you can try [MongoHQ](http://www.mongohq.com/)
-which has an easy setup).
-
-Add the db string to the production env in server/config/env/production.js.
-
-```
-git init
-git add .
-git commit -m "initial version"
-heroku apps:create
-heroku config:add NODE_ENV=production
-heroku config:add BUILDPACK_URL=https://github.com/mbuchetics/heroku-buildpack-nodejs-grunt.git
-git push heroku master
-heroku config:set NODE_ENV=production
-```
-
-## More Information
-  * Visit us at [Linnovate.net](http://www.linnovate.net/).
-  * Visit our [Ninja's Zone](http://www.meanleanstartupmachine.com/) for extended support.
-
-## License
-[The MIT License](http://opensource.org/licenses/MIT)
