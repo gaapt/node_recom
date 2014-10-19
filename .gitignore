@@ -36,11 +36,6 @@ npm-debug.log
 node_modules/
 
 # --------------------
-# Mongo Files
-# --------------------
-db/
-
-# --------------------
 # SASS Files
 # --------------------
 .sass-cache/
