@@ -10,5 +10,12 @@
 			<i class="glyphicon glyphicon-trash"></i>
 		</a>
 	</div>
+	<div class="row">
+		<div class="col-md-4"><span class="label label-default"><strong>Author:</strong> {{recom.author}}</span></div>
+		<div class="col-md-4"><span class="label label-default"><strong>Appointment:</strong> {{recom.appointment}}</span></div>
+		<div class="col-md-4"><span class="label label-default"><strong>Acceptable phases:</strong> {{recom.cond_phases.join('; ')}}</span></div>
+		<div class="col-md-4"><span class="label label-default" data-ng-if="recom.cond_arch"><strong>Acceptable architecture:</strong> {{recom.cond_arch}}</span></div>
+		<div class="col-md-4"><span class="label label-default" data-ng-if="recom.cond_tech"><strong>Acceptable technologies:</strong> {{recom.cond_tech.join('; ')}}</span></div>
+	</div><br \>
 	<div>{{recom.content}}</div>
 </section>

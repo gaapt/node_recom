@@ -1,28 +1,97 @@
 <section data-ng-controller="RecomsController" data-ng-init="findOne()">
-  <form name="recomForm" class="form-horizontal col-md-6" role="form" data-ng-submit="update(recomForm.$valid)" novalidate>
-    <div class="form-group" ng-class="{ 'has-error' : submitted && recomForm.title.$invalid }">
-      <label mean-token="'edit-title'" for="title" class="col-md-2 control-label">Title</label>
-      <div class="col-md-10">
-        <input name="title" type="text" class="form-control" data-ng-model="recom.title" id="title" placeholder="Title" required>
-        <div ng-show="submitted && recomForm.title.$invalid" class="help-block">
-          <p ng-show="recomForm.title.$error.required">Title is required</p>
-        </div>
-      </div>
-
-    </div>
-    <div class="form-group" ng-class="{ 'has-error' : submitted && recomForm.content.$invalid }">
-      <label mean-token="'edit-content'" for="content" class="col-md-2 control-label">Content</label>
-      <div class="col-md-10">
-        <textarea name="content" data-ng-model="recom.content" id="content" cols="30" rows="10" placeholder="Content" class="form-control" required></textarea>
-        <div ng-show="submitted && recomForm.content.$invalid" class="help-block">
-          <p ng-show="recomForm.content.$error.required">Content is required</p>
-        </div>
-      </div>
-    </div>
-    <div class="form-group">
-      <div class="col-md-offset-2 col-md-10">
-        <button mean-token="'edit-submit'" type="submit" class="btn btn-default">Submit</button>
-      </div>
-    </div>
+<div class="page-header">
+  <h1>Editing recommendation <small>Update with actual information</small></h1>
+</div>
+<div class="panel panel-primary">
+<div class="panel-heading">Update recommendation</div>
+<div class="panel-body">
+  <form name="recomForm" class="form-horizontal" role="form" data-ng-submit="update(recomForm.$valid)" novalidate>
+    <div class="row">
+	<div class="col-md-6">
+		<div class="panel panel-default">
+		<div class="panel-heading">General information:</div>
+		<div class="panel-body">
+		<div class="form-group" ng-class="{ 'has-error' : submitted && recomForm.title.$invalid }">
+			<label mean-token="'create-title'" class="col-md-3 control-label">Title*</label>
+			<div class="col-md-9">
+				<input name="title" type="text" class="form-control" data-ng-model="recom.title" id="title" placeholder="Title" popover="Enter the title of recommendation here" popover-trigger="focus" required>
+				<div ng-show="submitted && recomForm.title.$invalid" class="help-block">
+					<p ng-show="recomForm.title.$error.required">Title is required</p>
+				</div>
+			</div>
+		</div>
+		<div class="form-group" ng-class="{ 'has-error' : submitted && recomForm.author.$invalid }">
+			<label mean-token="'create-author'" class="col-md-3 control-label">Author*</label>
+			<div class="col-md-9">
+				<input name="author" type="text" class="form-control" data-ng-model="recom.author" id="author" placeholder="Author" popover="Enter the real author name of recommendation here" popover-trigger="focus" required>
+				<div ng-show="submitted && recomForm.author.$invalid" class="help-block">
+					<p ng-show="recomForm.author.$error.required">Author is required</p>
+				</div>
+			</div>
+		</div>
+		<div class="form-group" ng-class="{ 'has-error' : submitted && recomForm.appointment.$invalid }">
+			<label mean-token="'create-appointment'" class="col-md-3 control-label">Appointment*</label>
+			<div class="col-md-9">
+				<select name="appointment" class="form-control" id="appointment" data-ng-model="recom.appointment" data-ng-options="appointment.name for appointment in appointments" popover="What is the purpose of this recommendation?" popover-trigger="focus" ng-change="addAppointment(recom.appointment)" required></select>
+				<div ng-show="submitted && recomForm.appointment.$invalid" class="help-block">
+					<p ng-show="recomForm.appointment.$error.required">Appointment is required</p>
+				</div>
+			</div>
+		</div>	
+		</div>
+		</div>
+		<div class="panel panel-default">
+		<div class="panel-heading">Сonditions of application:</div>
+		<div class="panel-body">
+		<div class="form-group" ng-class="{ 'has-error' : submitted && recomForm.phase.$invalid }">
+			<label mean-token="'create-phase'" class="col-md-3 control-label">Phases*</label>
+			<div class="col-md-9">
+				<select name="phase" id="phase" class="multiselect" data-placeholder="Select phases..." data-ng-model="recom.cond_phase" ng-options="phase as phase for phase in phases" multiple="multiple" multiselect-dropdown popover="Which of software development stages are applicable for this recommendation?" popover-trigger="focus" required></select>
+				<!--<ui-select multiple ng-model="$parent.myPhase" style="width: 300px;">
+					<ui-select-match placeholder="Select phases...">{{$item}}</ui-select-match>
+					<ui-select-choices repeat="phase in phases | filter:$select.search">
+						{{phase}}
+					</ui-select-choices>
+				</ui-select>-->
+				<div ng-show="submitted && recomForm.phase.$invalid" class="help-block">
+					<p ng-show="recomForm.phase.$error.required">Phases are required</p>
+				</div>
+			</div>
+		</div>	
+		<div class="form-group" ng-class="{ 'has-error' : submitted && recomForm.arch.$invalid }">
+			<label mean-token="'create-arch'" class="col-md-3 control-label">Architecture type</label>
+			<div class="col-md-9">
+				<select name="arch" class="form-control" id="arch" data-ng-model="recom.cond_arch" data-ng-options="arch for arch in arches" popover="What type of architecture must have the system for the recommendation?" popover-trigger="focus" ng-change="addArch(recom.cond_arch)"></select>
+			</div>
+		</div>	
+		<div class="form-group">
+			<label mean-token="'create-tech'" class="col-md-3 control-label">Technologies</label>
+			<div class="col-md-9">
+				<!--<tags-input ng-model="techs" popover="What technologies should be used for this recommendation?" popover-trigger="focus"></tags-input>-->
+				<input type="text" data-ng-model="recom.cond_tech" popover="What technologies should be used for this recommendation?" popover-trigger="focus">
+			</div>
+		</div>	
+		</div>
+		</div>
+	</div>
+	<div class="col-md-6">
+		<div class="form-group" ng-class="{ 'has-error' : submitted && recomForm.content.$invalid }">
+			<label mean-token="'create-content'" for="content" class="col-md-3 control-label">Content*</label>
+			<div class="col-md-9">
+				<textarea name="content" data-ng-model="recom.content" id="content" cols="30" rows="10" placeholder="Content" class="form-control" popover="Describe the essence of the recommendations" popover-trigger="focus" required></textarea>
+				<div ng-show="submitted && recomForm.content.$invalid" class="help-block">
+					<p ng-show="recomForm.content.$error.required">Content is required</p>
+				</div>
+			</div>
+		</div>		
+		<div class="form-group">
+			<div class="col-md-offset-3 col-md-9">
+				<button type="submit" class="btn btn-info">Submit</button>
+			</div>
+		</div>
+	</div>
+	</div>
   </form>
+</div>
+</div>
 </section>

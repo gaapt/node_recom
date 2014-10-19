@@ -24,12 +24,15 @@ exports.recom = function(req, res, next, id) {
  * Create an recommendation
  */
 exports.create = function(req, res) {
+console.log('create!');
+console.log(req.body);
   var recom = new Recom(req.body);
   recom.user = req.user;
 
   recom.save(function(err) {
     if (err) {
-      return res.json(500, {
+	console.log(err);
+      return res.status(500).json({
         error: 'Cannot save the recommendation'
       });
     }

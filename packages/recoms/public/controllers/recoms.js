@@ -3,6 +3,8 @@
 angular.module('mean.recoms').controller('RecomsController', ['$scope', '$stateParams', '$location', '$log', 'modalService', 'Global', 'Recoms',
 		function ($scope, $stateParams, $location, $log, modalService, Global, Recoms) {
 			$scope.global = Global;
+			
+			$scope.rec = {};
 
 			$scope.hasAuthorization = function (recom) {
 				if (!recom || !recom.user)
@@ -13,8 +15,13 @@ angular.module('mean.recoms').controller('RecomsController', ['$scope', '$stateP
 			$scope.create = function (isValid) {
 				if (isValid) {
 					var recom = new Recoms({
-							title : this.title,
-							content : this.content
+							title : this.rec.title,
+							author : this.rec.author,
+							appointment : this.rec.appointment.name,
+							cond_phases : this.rec.cond_phase,
+							cond_arch : this.rec.cond_arch,
+							cond_tech : $scope.cond_tech,
+							content : this.rec.content
 						});
 					recom.$save(function (response) {
 						$location.path('recommendations/' + response._id);
@@ -113,11 +120,11 @@ angular.module('mean.recoms').controller('RecomsController', ['$scope', '$stateP
 					};
 
 					modalService.showModal({}, modalOptions).then(function (result) {
-						$scope.appointments.splice($scope.arches.length-1, 0, result);
+						$scope.arches.splice($scope.arches.length-1, 0, result);
 					});
 				}
 			};
 			
-			$scope.techs = ['NodeJS', 'OOP', 'AOP'];
+			$scope.cond_tech = ['NodeJS', 'OOP', 'AOP'];
 		}
 	]);
