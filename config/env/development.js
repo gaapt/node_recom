@@ -9,8 +9,8 @@ module.exports = {
     name: 'Base Recommendations'
   },
   facebook: {
-    clientID: 'DEFAULT_APP_ID',
-    clientSecret: 'APP_SECRET',
+    clientID: '915768598451160',
+    clientSecret: 'fb0865533ae0572940452db00c8ca1cb',
     callbackURL: 'http://localhost:3000/auth/facebook/callback'
   },
   twitter: {
@@ -24,8 +24,8 @@ module.exports = {
     callbackURL: 'http://localhost:3000/auth/github/callback'
   },
   google: {
-    clientID: 'DEFAULT_APP_ID',
-    clientSecret: 'APP_SECRET',
+    clientID: '937308274165-9sdnsioc65tl7uceai0kg520u7t3pghu.apps.googleusercontent.com',
+    clientSecret: 'Cxlr6FZOoupN3ekdTlF2zzq2',
     callbackURL: 'http://localhost:3000/auth/google/callback'
   },
   linkedin: {
