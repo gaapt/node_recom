@@ -46,7 +46,6 @@
 		<div class="form-group" ng-class="{ 'has-error' : submitted && recomForm.phase.$invalid }">
 			<label mean-token="'create-phase'" class="col-md-3 control-label">Phases*</label>
 			<div class="col-md-9">
-				<!--<select name="phase" id="phase" class="multiselect" data-placeholder="Select phases..." data-ng-model="rec.cond_phase" ng-options="phase as phase for phase in phases" multiple="multiple" multiselect-dropdown popover="Which of software development stages are applicable for this recommendation?" popover-trigger="focus" required></select>-->
 				<ui-select multiple ng-model="recom.cond_phase" style="width: 300px;">
 					<ui-select-match placeholder="Select phases...">{{$item}}</ui-select-match>
 					<ui-select-choices repeat="phase in recom.cond_phase | filter:$select.search">
@@ -68,7 +67,17 @@
 			<label mean-token="'create-tech'" class="col-md-3 control-label">Technologies</label>
 			<div class="col-md-9">
 				<tags-input ng-model="recom.cond_tech" popover="What technologies should be used for this recommendation?" popover-trigger="focus"></tags-input>
-				<!--<input type="text" data-ng-model="cond_tech" popover="What technologies should be used for this recommendation?" popover-trigger="focus">-->
+			</div>
+		</div>	
+		</div>
+		</div>
+		<div class="panel panel-default">
+		<div class="panel-heading">Additional information:</div>
+		<div class="panel-body">
+		<div class="form-group">
+			<label mean-token="'create-recources'" class="col-md-3 control-label">Required resources</label>
+			<div class="col-md-9">
+				<tags-input ng-model="recom.req_resouces" popover="What resources are needed to implement this recommendation?" popover-trigger="focus"></tags-input>
 			</div>
 		</div>	
 		</div>

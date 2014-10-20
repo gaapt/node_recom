@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('mean.recoms').controller('RecomsController', ['$scope', '$stateParams', '$location', '$log', 'modalService', 'Global', 'Recoms',
-		function ($scope, $stateParams, $location, $log, modalService, Global, Recoms) {
+angular.module('mean.recoms').controller('RecomsController', ['$scope', '$stateParams', '$location', '$http', '$log', 'modalService', 'Global', 'Recoms',
+		function ($scope, $stateParams, $location, $http, $log, modalService, Global, Recoms) {
 			$scope.global = Global;
 			$scope.rec = {};
 
@@ -19,7 +19,10 @@ angular.module('mean.recoms').controller('RecomsController', ['$scope', '$stateP
 							appointment : this.rec.appointment.name,
 							cond_phases : this.rec.cond_phase,
 							cond_arch : this.rec.cond_arch,
-							cond_tech : $scope.cond_tech,
+							cond_tech : this.rec.cond_tech,
+							req_resources : this.rec.req_resources,
+							consequences_use : this.rec.consequences_use,
+							consequences_nonuse : this.rec.consequences_nonuse,
 							content : this.rec.content
 						});
 					recom.$save(function (response) {
@@ -87,8 +90,10 @@ angular.module('mean.recoms').controller('RecomsController', ['$scope', '$stateP
 					name : '--Other--'
 				}
 			];
-
 			$scope.phases = ['Preliminary analysis', 'Requirements definition', 'System design', 'Development', 'Integration and testing', 'Acceptance, installation, deployment', 'Maintenance', 'Evaluation', 'Disposal'];
+			$scope.arches = ['Monolith', 'Client-server', '--Other--'];
+			$scope.rec.cond_tech = ['NodeJS', 'OOP', 'AOP'];
+			$scope.rec.req_resources = ['Time', 'Money'];
 
 			$scope.addAppointment = function (option) {
 				if (option.name === '--Other--') {
@@ -100,15 +105,13 @@ angular.module('mean.recoms').controller('RecomsController', ['$scope', '$stateP
 					};
 
 					modalService.showModal({}, modalOptions).then(function (result) {
-						$scope.appointments.splice($scope.appointments.length-1, 0, {
+						$scope.appointments.splice($scope.appointments.length - 1, 0, {
 							'name' : result
 						});
 					});
 				}
 			};
-			
-			$scope.arches = ['Monolith', 'Client-server', '--Other--'];
-			
+
 			$scope.addArch = function (option) {
 				if (option === '--Other--') {
 					var modalOptions = {
@@ -119,11 +122,52 @@ angular.module('mean.recoms').controller('RecomsController', ['$scope', '$stateP
 					};
 
 					modalService.showModal({}, modalOptions).then(function (result) {
-						$scope.arches.splice($scope.arches.length-1, 0, result);
+						$scope.arches.splice($scope.arches.length - 1, 0, result);
 					});
 				}
 			};
 			
-			$scope.cond_tech = ['NodeJS', 'OOP', 'AOP'];
+			$scope.max = 10;
+			$scope.isReadonly = false;
+			
+			$http.get('/api/getMark', {
+				params: {recId: $stateParams.recomId}
+			}).success(function (data) {
+				//$log.info('mark: '+data);
+				$scope.mark = data;
+				getRate();
+			}).error(function (data, status) {
+				if(status === 500)
+					$log.error('error :(');
+			});
+			
+			$scope.setMark = function (m) {
+				$http.get('/api/setMark', {
+					params : {
+						mark : m,
+						recId: $stateParams.recomId
+					}
+				}).success(function (data) {
+					//$log.info(data);
+					getRate();
+				}).error(function (data, status) {
+					if (status === 500)
+						$log.error('error :(');
+				});
+			};
+			
+			function getRate() {
+				$http.get('/api/getRate', {
+					params : {
+						recId: $stateParams.recomId
+					}
+				}).success(function (data) {
+					//$log.info(data);
+					$scope.rate = data;
+				}).error(function (data, status) {
+					if (status === 500)
+						$log.error('error :(');
+				});
+			}
 		}
 	]);
