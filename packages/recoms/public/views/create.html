@@ -1,3 +1,5 @@
+<script src="/bower_components/angular-ui-select/dist/select.min.js"></script>
+<script type="text/javascript" src="/bower_components/ng-tags-input/ng-tags-input.min.js"></script>
 <section data-ng-controller="RecomsController">
 <div class="page-header">
   <h1>Adding recommendation <small>Specify as much as possible useful information</small></h1>
@@ -32,7 +34,9 @@
 		<div class="form-group" ng-class="{ 'has-error' : submitted && recomForm.appointment.$invalid }">
 			<label mean-token="'create-appointment'" class="col-md-3 control-label">Appointment*</label>
 			<div class="col-md-9">
-				<select name="appointment" class="form-control" id="appointment" data-ng-model="rec.appointment" data-ng-options="appointment.name for appointment in appointments" popover="What is the purpose of this recommendation?" popover-trigger="focus" ng-change="addAppointment(rec.appointment)" required></select>
+				<select name="appointment" class="form-control" id="appointment" data-ng-model="rec.appointment" data-ng-options="appointment.name for appointment in appointments" popover="What is the purpose of this recommendation?" popover-trigger="focus" ng-change="addAppointment(rec.appointment)" required>
+					<option value="" disabled selected>Choose appointment</option>
+				</select>
 				<div ng-show="submitted && recomForm.appointment.$invalid" class="help-block">
 					<p ng-show="recomForm.appointment.$error.required">Appointment is required</p>
 				</div>
@@ -46,13 +50,13 @@
 		<div class="form-group" ng-class="{ 'has-error' : submitted && recomForm.phase.$invalid }">
 			<label mean-token="'create-phase'" class="col-md-3 control-label">Phases*</label>
 			<div class="col-md-9">
-				<select name="phase" id="phase" class="multiselect" data-placeholder="Select phases..." data-ng-model="rec.cond_phase" ng-options="phase as phase for phase in phases" multiple="multiple" multiselect-dropdown popover="Which of software development stages are applicable for this recommendation?" popover-trigger="focus" required></select>
-				<!--<ui-select multiple ng-model="$parent.myPhase" style="width: 300px;">
+				<!--<select name="phase" id="phase" class="multiselect" data-placeholder="Select phases..." data-ng-model="rec.cond_phase" ng-options="phase as phase for phase in phases" multiple="multiple" multiselect-dropdown popover="Which of software development stages are applicable for this recommendation?" popover-trigger="focus" required></select>-->
+				<ui-select multiple ng-model="rec.cond_phase" style="width: 300px;">
 					<ui-select-match placeholder="Select phases...">{{$item}}</ui-select-match>
 					<ui-select-choices repeat="phase in phases | filter:$select.search">
 						{{phase}}
 					</ui-select-choices>
-				</ui-select>-->
+				</ui-select>
 				<div ng-show="submitted && recomForm.phase.$invalid" class="help-block">
 					<p ng-show="recomForm.phase.$error.required">Phases are required</p>
 				</div>
@@ -61,14 +65,16 @@
 		<div class="form-group" ng-class="{ 'has-error' : submitted && recomForm.arch.$invalid }">
 			<label mean-token="'create-arch'" class="col-md-3 control-label">Architecture type</label>
 			<div class="col-md-9">
-				<select name="arch" class="form-control" id="arch" data-ng-model="rec.cond_arch" data-ng-options="arch for arch in arches" popover="What type of architecture must have the system for the recommendation?" popover-trigger="focus" ng-change="addArch(rec.cond_arch)"></select>
+				<select name="arch" class="form-control" id="arch" data-ng-model="rec.cond_arch" data-ng-options="arch for arch in arches" popover="What type of architecture must have the system for the recommendation?" popover-trigger="focus" ng-change="addArch(rec.cond_arch)">
+					<option value="" disabled selected>Select architecture</option>
+				</select>
 			</div>
 		</div>	
 		<div class="form-group">
 			<label mean-token="'create-tech'" class="col-md-3 control-label">Technologies</label>
 			<div class="col-md-9">
-				<!--<tags-input ng-model="techs" popover="What technologies should be used for this recommendation?" popover-trigger="focus"></tags-input>-->
-				<input type="text" data-ng-model="cond_tech" popover="What technologies should be used for this recommendation?" popover-trigger="focus">
+				<tags-input ng-model="cond_tech" popover="What technologies should be used for this recommendation?" popover-trigger="focus"></tags-input>
+				<!--<input type="text" data-ng-model="cond_tech" popover="What technologies should be used for this recommendation?" popover-trigger="focus">-->
 			</div>
 		</div>	
 		</div>

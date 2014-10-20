@@ -3,7 +3,6 @@
 angular.module('mean.recoms').controller('RecomsController', ['$scope', '$stateParams', '$location', '$log', 'modalService', 'Global', 'Recoms',
 		function ($scope, $stateParams, $location, $log, modalService, Global, Recoms) {
 			$scope.global = Global;
-			
 			$scope.rec = {};
 
 			$scope.hasAuthorization = function (recom) {

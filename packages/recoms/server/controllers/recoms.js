@@ -28,6 +28,7 @@ console.log('create!');
 console.log(req.body);
   var recom = new Recom(req.body);
   recom.user = req.user;
+  recom.cond_tech = _.map(recom.cond_tech, 'text');
 
   recom.save(function(err) {
     if (err) {
