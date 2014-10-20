@@ -57,9 +57,6 @@ var RecomSchema = new Schema({
 		friend_recoms : {
 			type : Array
 		},
-		tags : {
-			type : Array
-		},
 		content : {
 			type : String,
 			required : true,

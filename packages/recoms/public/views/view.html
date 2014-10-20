@@ -1,7 +1,14 @@
 <section data-ng-controller="RecomsController" data-ng-init="findOne()">
+<div class="panel panel-default">
+<div class="panel-heading">
+<div class="row">
+<div class="col-md-8"><h2>{{recom.title}}</h2></div>
+<div class="col-md-4"><br \><rating ng-model="mark" max="max" readonly="isReadonly"  data-ng-click="setMark(mark)"></rating>&nbsp&nbsp&nbspYour mark/Rate: <b>{{mark}}/{{rate}}</b></div>
+</div>
+</div>
+ <div class="panel-body">
 	<span>{{recom.created | date:'medium'}}</span> /
 	<span>{{recom.user.name}}</span>
-	<h2>{{recom.title}}</h2>
 	<div data-ng-if="hasAuthorization(recom)">
 		<a class="btn" href="/#!/recommendations/{{recom._id}}/edit">
 			<i class="glyphicon glyphicon-edit"></i>
@@ -9,7 +16,7 @@
 		<a class="btn" data-ng-click="remove(recom);">
 			<i class="glyphicon glyphicon-trash"></i>
 		</a>
-	</div>
+	</div>	
 	<div class="row">
 		<div class="col-md-4"><span class="label label-default"><strong>Author:</strong> {{recom.author}}</span></div>
 		<div class="col-md-4"><span class="label label-default"><strong>Appointment:</strong> {{recom.appointment}}</span></div>
@@ -18,4 +25,6 @@
 		<div class="col-md-4"><span class="label label-default" data-ng-if="recom.cond_tech"><strong>Acceptable technologies:</strong> {{recom.cond_tech.join('; ')}}</span></div>
 	</div><br \>
 	<div>{{recom.content}}</div>
+  </div>
+</div>
 </section>

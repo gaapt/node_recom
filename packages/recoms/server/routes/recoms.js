@@ -19,6 +19,9 @@ module.exports = function(Articles, app, auth) {
     .get(recoms.show)
     .put(auth.requiresLogin, hasAuthorization, recoms.update)
     .delete(auth.requiresLogin, hasAuthorization, recoms.destroy);
+  app.route('/api/getRate').get(auth.requiresLogin, hasAuthorization, recoms.getRate);
+  app.route('/api/getMark').get(auth.requiresLogin, hasAuthorization, recoms.getMark);
+  app.route('/api/setMark').get(auth.requiresLogin, hasAuthorization, recoms.setMark);
 
   // Finish with setting up the recomId param
   app.param('recomId', recoms.recom);
