@@ -34,9 +34,12 @@
 		<div class="form-group" ng-class="{ 'has-error' : submitted && recomForm.appointment.$invalid }">
 			<label mean-token="'create-appointment'" class="col-md-3 control-label">Appointment*</label>
 			<div class="col-md-9">
-				<select name="appointment" class="form-control" id="appointment" data-ng-model="rec.appointment" data-ng-options="appointment.name for appointment in appointments" popover="What is the purpose of this recommendation?" popover-trigger="focus" ng-change="addAppointment(rec.appointment)" required>
-					<option value="" disabled selected>Choose appointment</option>
-				</select>
+				<ui-select name="appointment" id="appointment" ng-model="rec.appointment" ng-change="addAppointment(rec.appointment)" style="width: 300px;" required>
+					<ui-select-match placeholder="Select appointment...">{{rec.appointment}}</ui-select-match>
+					<ui-select-choices repeat="appointment in appointments | filter:$select.search">
+						{{appointment}}
+					</ui-select-choices>
+				</ui-select>
 				<div ng-show="submitted && recomForm.appointment.$invalid" class="help-block">
 					<p ng-show="recomForm.appointment.$error.required">Appointment is required</p>
 				</div>
@@ -50,7 +53,7 @@
 		<div class="form-group" ng-class="{ 'has-error' : submitted && recomForm.phase.$invalid }">
 			<label mean-token="'create-phase'" class="col-md-3 control-label">Phases*</label>
 			<div class="col-md-9">
-				<ui-select multiple ng-model="rec.cond_phase" style="width: 300px;">
+				<ui-select name="phase" id="phase" multiple ng-model="rec.cond_phase" style="width: 300px;" required>
 					<ui-select-match placeholder="Select phases...">{{$item}}</ui-select-match>
 					<ui-select-choices repeat="phase in phases | filter:$select.search">
 						{{phase}}
@@ -64,9 +67,12 @@
 		<div class="form-group" ng-class="{ 'has-error' : submitted && recomForm.arch.$invalid }">
 			<label mean-token="'create-arch'" class="col-md-3 control-label">Architecture type</label>
 			<div class="col-md-9">
-				<select name="arch" class="form-control" id="arch" data-ng-model="rec.cond_arch" data-ng-options="arch for arch in arches" popover="What type of architecture must have the system for the recommendation?" popover-trigger="focus" ng-change="addArch(rec.cond_arch)">
-					<option value="" disabled selected>Select architecture</option>
-				</select>
+				<ui-select name="arch" id="arch" ng-model="rec.cond_arch" ng-change="addArch(rec.cond_arch)" style="width: 300px;">
+					<ui-select-match placeholder="Select types...">{{rec.cond_arch}}</ui-select-match>
+					<ui-select-choices repeat="arch in arches | filter:$select.search">
+						{{arch}}
+					</ui-select-choices>
+				</ui-select>
 			</div>
 		</div>	
 		<div class="form-group">

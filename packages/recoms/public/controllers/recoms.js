@@ -69,8 +69,16 @@ angular.module('mean.recoms').controller('RecomsController', ['$scope', '$stateP
 			};
 
 			$scope.find = function () {
-				Recoms.query(function (recoms) {
+				/*Recoms.query(function (recoms) {
 					$scope.recoms = recoms;
+				});*/
+				$http.get('/api/getAllWithMarks')
+				.success(function (data) {
+					$log.info(data);
+					$scope.recoms = data;
+				}).error(function (data, status) {
+					if (status === 500)
+						$log.error('error :(');
 				});
 			};
 
@@ -82,21 +90,14 @@ angular.module('mean.recoms').controller('RecomsController', ['$scope', '$stateP
 				});
 			};
 
-			$scope.appointments = [{
-					name : 'Technical'
-				}, {
-					name : 'Management'
-				}, {
-					name : '--Other--'
-				}
-			];
+			$scope.appointments = ['Technical', 'Management', '--Other--'];
 			$scope.phases = ['Preliminary analysis', 'Requirements definition', 'System design', 'Development', 'Integration and testing', 'Acceptance, installation, deployment', 'Maintenance', 'Evaluation', 'Disposal'];
 			$scope.arches = ['Monolith', 'Client-server', '--Other--'];
 			$scope.rec.cond_tech = ['NodeJS', 'OOP', 'AOP'];
 			$scope.rec.req_resources = ['Time', 'Money'];
 
 			$scope.addAppointment = function (option) {
-				if (option.name === '--Other--') {
+				if (option === '--Other--') {
 					var modalOptions = {
 						closeButtonText : 'Cancel',
 						actionButtonText : 'Confirm',
@@ -105,9 +106,7 @@ angular.module('mean.recoms').controller('RecomsController', ['$scope', '$stateP
 					};
 
 					modalService.showModal({}, modalOptions).then(function (result) {
-						$scope.appointments.splice($scope.appointments.length - 1, 0, {
-							'name' : result
-						});
+						$scope.appointments.splice($scope.appointments.length - 1, 0, result);
 					});
 				}
 			};

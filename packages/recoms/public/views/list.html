@@ -1,22 +1,25 @@
 <section data-ng-controller="RecomsController" data-ng-init="find()">
-  <ul class="recoms list-group">
+  <div class="recoms list-group">
     <li data-ng-repeat="recom in recoms" class="list-group-item">
       <span>{{recom.created | date:'medium'}}</span> /
       <span>{{recom.user.name}}</span>
-      <h2>
-        <a data-ng-href="#!/recommendations/{{recom._id}}">{{recom.title}}</a>
-        <span data-ng-if="hasAuthorization(recom)">
-          <a class="btn" href="/#!/recommendations/{{recom._id}}/edit">
-            <i class="glyphicon glyphicon-edit"></i>
-          </a>
-          <a class="btn" data-ng-click="remove(recom);">
-            <i class="glyphicon glyphicon-trash"></i>
-          </a>
-        </span>
+      <h2 class="row">
+        <a class="col-md-8" data-ng-href="#!/recommendations/{{recom._id}}">{{recom.title}}</a>
+		<rating class="col-md-4" ng-model="recom.rate" max="max" readonly="true">
       </h2>
+	  <div>
+	  <span data-ng-if="hasAuthorization(recom)">
+        <a class="btn" href="/#!/recommendations/{{recom._id}}/edit">
+			<i class="glyphicon glyphicon-edit"></i>
+        </a>
+        <a class="btn" data-ng-click="remove(recom);">
+			<i class="glyphicon glyphicon-trash"></i>
+        </a>
+      </span>
 	  <span class="badge pull-right"><strong>Author:</strong> {{recom.author}}</span>
 	  <span class="badge pull-right"><strong>Appointment:</strong> {{recom.appointment}}</span>
 	  <span class="badge pull-right"><strong>Acceptable phases:</strong> {{recom.cond_phases.join('; ')}}</span>
+	  </div>
       <div>{{recom.content}}</div>
     </li>
   </ul>

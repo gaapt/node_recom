@@ -89,14 +89,48 @@ exports.show = function (req, res) {
  * List of recommendations
  */
 exports.all = function (req, res) {
-	Recom.find().sort('-created').populate('user', 'name username').exec(function (err, articles) {
+	Recom.find().sort('-created').populate('user', 'name username').exec(function (err, recoms) {
 		if (err) {
 			return res.json(500, {
 				error : 'Cannot list the recommendations'
 			});
 		}
-		res.json(articles);
+		res.json(recoms);
+	});
+};
 
+exports.allWithMarks = function (req, res) {
+	Recom.find().sort('-created').populate('user', 'name username').lean().exec(function (err, recoms) {
+		if (err) {
+			return res.json(500, {
+				error : 'Cannot list the recommendations'
+			});
+		}
+		_.forEach(recoms, function(item, index) {
+			var recId = item._id;
+			Mark
+			.aggregate({ 
+				'$group': {
+					'_id': '$rec', 
+					'rate': { '$avg': '$what_set' } 
+				}
+			}, {
+				'$match': {
+					'_id': recId
+				}
+			})
+			.exec(function (err, recs) {
+				if (err) {
+					return res.json(500, {
+						error : err
+					});
+				}
+				_.assign(item, { 'rate' : recs[0].rate });
+				if (index === recoms.length-1) {						
+					res.json(recoms);
+				}
+			});
+		});
 	});
 };
 
@@ -175,13 +209,18 @@ exports.getMark = function (req, res) {
 };
 
 exports.getRate = function (req, res) {
-	var recId = req.query.recId;
+	var ObjectId = mongoose.Types.ObjectId; 
+	var recId = new ObjectId(req.query.recId);
 	Mark
 	.aggregate({ 
 		'$group': {
 			'_id': '$rec', 
 			'rate': { '$avg': '$what_set' } 
-		} 
+		}
+	}, {
+		'$match': {
+			'_id': recId
+		}
 	})
 	.exec(function (err, mark) {
 		if (err) {
@@ -190,14 +229,8 @@ exports.getRate = function (req, res) {
 			});
 		}
 		if (!mark) {
-			return res.json('');
+			return res.jsonp(0);
 		}
-		var rm = _.find(mark, function(chr) {		
-			return chr._id.toString() === recId;
-		});
-		if(!rm) {
-			return res.json('');
-		}
-		res.jsonp(rm.rate);
+		res.jsonp(mark[0].rate);
 	});
 };
