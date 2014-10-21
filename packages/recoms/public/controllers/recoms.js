@@ -129,17 +129,21 @@ angular.module('mean.recoms').controller('RecomsController', ['$scope', '$stateP
 			
 			$scope.max = 10;
 			$scope.isReadonly = false;
-			
-			$http.get('/api/getMark', {
-				params: {recId: $stateParams.recomId}
-			}).success(function (data) {
-				//$log.info('mark: '+data);
-				$scope.mark = data;
-				getRate();
-			}).error(function (data, status) {
-				if(status === 500)
-					$log.error('error :(');
-			});
+
+			if ($stateParams.recomId) {
+				$http.get('/api/getMark', {
+					params : {
+						recId : $stateParams.recomId
+					}
+				}).success(function (data) {
+					//$log.info('mark: '+data);
+					$scope.mark = data;
+					getRate();
+				}).error(function (data, status) {
+					if (status === 500)
+						$log.error('error :(');
+				});
+			}
 			
 			$scope.setMark = function (m) {
 				$http.get('/api/setMark', {

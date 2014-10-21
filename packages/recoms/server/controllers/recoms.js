@@ -150,6 +150,10 @@ exports.setMark = function (req, res) {
 
 exports.getMark = function (req, res) {
 	var recId = req.query.recId;
+	if (recId === '') {
+		res.status(400).send('Invalid URI');
+		return;
+	}
 	Mark
 	.findOne({
 		rec : recId,
@@ -162,6 +166,9 @@ exports.getMark = function (req, res) {
 			return res.json(500, {
 				error : err
 			});
+		}
+		if (!mark) {
+			return res.json('');
 		}
 		res.jsonp(mark.what_set);
 	});
@@ -182,8 +189,15 @@ exports.getRate = function (req, res) {
 				error : err
 			});
 		}
-		res.jsonp(_.find(mark, function(chr) {		
+		if (!mark) {
+			return res.json('');
+		}
+		var rm = _.find(mark, function(chr) {		
 			return chr._id.toString() === recId;
-		}).rate);
+		});
+		if(!rm) {
+			return res.json('');
+		}
+		res.jsonp(rm.rate);
 	});
 };
