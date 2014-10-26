@@ -24,8 +24,13 @@ Recoms.register(function(app, auth, database) {
   });
   Recoms.menus.add({
     'roles': ['authenticated'],
-    'title': 'Create New Recommendation',
+    'title': 'Create New',
     'link': 'create recommendation'
+  });
+  Recoms.menus.add({
+    'roles': ['authenticated'],
+    'title': 'Find',
+    'link': 'find recommendation'
   });
 
   Recoms.aggregateAsset('css', 'recoms.css');

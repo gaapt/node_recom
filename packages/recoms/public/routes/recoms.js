@@ -52,6 +52,13 @@ angular.module('mean.recoms').config(['$stateProvider',
         resolve: {
           loggedin: checkLoggedin
         }
+      })
+	  .state('find recommendation', {
+        url: '/search',
+        templateUrl: 'recoms/views/search.html',
+        resolve: {
+          loggedin: checkLoggedin
+        }
       });
   }
 ]);

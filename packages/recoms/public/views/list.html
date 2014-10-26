@@ -1,8 +1,9 @@
 <section data-ng-controller="RecomsController" data-ng-init="find()">
   <div class="recoms list-group">
+  <ul>
     <li data-ng-repeat="recom in recoms" class="list-group-item">
-      <span>{{recom.created | date:'medium'}}</span> /
-      <span>{{recom.user.name}}</span>
+      <p class="bg-info"><span>{{recom.created | date:'medium'}}</span> /
+      <span>{{recom.user.name}}</span></p>
       <h2 class="row">
         <a class="col-md-8" data-ng-href="#!/recommendations/{{recom._id}}">{{recom.title}}</a>
 		<rating class="col-md-4" ng-model="recom.rate" max="max" readonly="true">
@@ -20,8 +21,12 @@
 	  <span class="badge pull-right"><strong>Appointment:</strong> {{recom.appointment}}</span>
 	  <span class="badge pull-right"><strong>Acceptable phases:</strong> {{recom.cond_phases.join('; ')}}</span>
 	  </div>
-      <div>{{recom.content}}</div>
+		<div class="recommendation">
+			<p ng-bind-html="renderHtml(recom.content)"></p>
+			<!--<a href="#!/recommendations/{{recom._id}}" class="btn btn-primary btn-sm" role="button">Learn more</a>-->
+		</div>
     </li>
   </ul>
   <h1 data-ng-hide="!recoms || recoms.length">No recommendations yet. <br> Why don't you <a href="/#!/recommendations/create">Create One</a>?</h1>
+  </div>
 </section>

@@ -20,9 +20,11 @@ module.exports = function(Articles, app, auth) {
     .put(auth.requiresLogin, hasAuthorization, recoms.update)
     .delete(auth.requiresLogin, hasAuthorization, recoms.destroy);
   app.route('/api/getAllWithMarks').get(auth.requiresLogin, hasAuthorization, recoms.allWithMarks);
+  app.route('/api/getRecom').get(recoms.getRecom);
   app.route('/api/getRate').get(auth.requiresLogin, hasAuthorization, recoms.getRate);
   app.route('/api/getMark').get(auth.requiresLogin, hasAuthorization, recoms.getMark);
   app.route('/api/setMark').get(auth.requiresLogin, hasAuthorization, recoms.setMark);
+  app.route('/api/findRecoms').post(recoms.findRecoms);
 
   // Finish with setting up the recomId param
   app.param('recomId', recoms.recom);

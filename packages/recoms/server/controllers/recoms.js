@@ -22,6 +22,32 @@ exports.recom = function (req, res, next, id) {
 	});
 };
 
+exports.getRecom = function (req, res) {
+	var recId = req.query.recId;
+	if(!recId) {
+		res.render('error', {
+			status : 500
+		});
+	}
+	Recom
+	.findById(recId)
+	.populate('user')
+	.lean()
+	.exec(function (err, recom) {
+		if (err) {
+			console.log(err);
+			res.render('error', {
+				status : 500
+			});
+		}
+		if (!recom) {
+			return res.jsonp('empty result');
+		}
+		recom.user = {_id : recom.user._id, name : recom.user.name};
+		res.jsonp(recom);
+	});
+};
+
 /**
  * Create an recommendation
  */
@@ -52,6 +78,7 @@ exports.update = function (req, res) {
 
 	recom.save(function (err) {
 		if (err) {
+			console.log(err);
 			return res.json(500, {
 				error : 'Cannot update the recommendation'
 			});
@@ -125,7 +152,10 @@ exports.allWithMarks = function (req, res) {
 						error : err
 					});
 				}
-				_.assign(item, { 'rate' : recs[0].rate });
+				if(recs.length === 0)
+					_.assign(item, { 'rate' : 0 });
+				else
+					_.assign(item, { 'rate' : recs[0].rate });
 				if (index === recoms.length-1) {						
 					res.json(recoms);
 				}
@@ -202,7 +232,7 @@ exports.getMark = function (req, res) {
 			});
 		}
 		if (!mark) {
-			return res.json('');
+			return res.json(0);
 		}
 		res.jsonp(mark.what_set);
 	});
@@ -231,6 +261,30 @@ exports.getRate = function (req, res) {
 		if (!mark) {
 			return res.jsonp(0);
 		}
-		res.jsonp(mark[0].rate);
+		res.jsonp(mark.length === 0 ? 0 : mark[0].rate);
+	});
+};
+
+exports.findRecoms = function (req, res) {
+	var searchQuery = req.body.search;
+	if(!searchQuery) {
+		res.render('error', {
+			status : 500
+		});
+	}
+	Recom
+	.find({})
+	.or([
+		{'title' : {'$regex': searchQuery.keywords}},
+		{'author' : {'$regex': searchQuery.keywords}},
+		{'content' : {'$regex': searchQuery.keywords}}
+	])
+	.exec(function(err, recoms) {
+		if(err) {
+			res.render('error', {
+				status : 500
+			});
+		}
+		res.jsonp(recoms);
 	});
 };

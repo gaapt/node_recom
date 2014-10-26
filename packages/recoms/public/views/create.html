@@ -34,7 +34,7 @@
 		<div class="form-group" ng-class="{ 'has-error' : submitted && recomForm.appointment.$invalid }">
 			<label mean-token="'create-appointment'" class="col-md-3 control-label">Appointment*</label>
 			<div class="col-md-9">
-				<ui-select name="appointment" id="appointment" ng-model="rec.appointment" ng-change="addAppointment(rec.appointment)" style="width: 300px;" required>
+				<ui-select name="appointment" id="appointment" ng-model="rec.appointment" ng-change="addAppointment(rec.appointment)" style="width: 300px;" popover="What is the purpose of this recommendation?" popover-trigger="focus" required>
 					<ui-select-match placeholder="Select appointment...">{{rec.appointment}}</ui-select-match>
 					<ui-select-choices repeat="appointment in appointments | filter:$select.search">
 						{{appointment}}
@@ -53,7 +53,7 @@
 		<div class="form-group" ng-class="{ 'has-error' : submitted && recomForm.phase.$invalid }">
 			<label mean-token="'create-phase'" class="col-md-3 control-label">Phases*</label>
 			<div class="col-md-9">
-				<ui-select name="phase" id="phase" multiple ng-model="rec.cond_phase" style="width: 300px;" required>
+				<ui-select name="phase" id="phase" multiple ng-model="rec.cond_phase" style="width: 300px;" popover="Which of software development stages are applicable for this recommendation?" popover-trigger="mouseenter" required>
 					<ui-select-match placeholder="Select phases...">{{$item}}</ui-select-match>
 					<ui-select-choices repeat="phase in phases | filter:$select.search">
 						{{phase}}
@@ -78,7 +78,7 @@
 		<div class="form-group">
 			<label mean-token="'create-tech'" class="col-md-3 control-label">Technologies</label>
 			<div class="col-md-9">
-				<tags-input ng-model="rec.cond_tech" popover="What technologies should be used for this recommendation?" popover-trigger="focus"></tags-input>
+				<tags-input ng-model="rec.cond_tech" popover="What technologies should be used for this recommendation?" popover-trigger="mouseenter"></tags-input>
 			</div>
 		</div>	
 		</div>
@@ -89,7 +89,7 @@
 		<div class="form-group">
 			<label mean-token="'create-recources'" class="col-md-3 control-label">Required resources</label>
 			<div class="col-md-9">
-				<tags-input ng-model="rec.req_resources" popover="What resources are needed to implement this recommendation?" popover-trigger="focus"></tags-input>
+				<tags-input ng-model="rec.req_resources" popover="What resources are needed to implement this recommendation?" popover-trigger="mouseenter"></tags-input>
 			</div>
 		</div>
 		<div class="form-group">

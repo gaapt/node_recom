@@ -1,0 +1,75 @@
+<section data-ng-controller="SearchController">
+	<div class="panel panel-default" >
+      <div class="panel-heading">
+        Search panel
+      </div>
+      <div class="panel-body">
+	  <form data-ng-submit="find()">
+        <div class="row">
+					<div class="form-group col-md-6">
+						<label>Appointment</label>
+						<ui-select name="appointment" id="appointment" ng-model="search.appointment" ng-change="addAppointment(search.appointment)" style="width: 300px;">
+							<ui-select-match placeholder="Select appointment...">{{search.appointment}}</ui-select-match>
+							<ui-select-choices repeat="appointment in appointments | filter:$select.search">
+								{{appointment}}
+							</ui-select-choices>
+						</ui-select>
+					</div>
+					<div class="form-group col-md-6">
+						<label>Phases</label>
+						<ui-select name="phase" id="phase" multiple ng-model="search.cond_phase" style="width: 300px;" popover="Which of software development stages are applicable for this recommendation?" popover-trigger="mouseenter" required>
+							<ui-select-match placeholder="Select phases...">{{$item}}</ui-select-match>
+							<ui-select-choices repeat="phase in phases | filter:$select.search">
+								{{phase}}
+							</ui-select-choices>
+						</ui-select>
+					</div>
+		</div>
+		<div class="row">
+					<div class="form-group col-md-6">
+						<label>Architecture</label>
+						<ui-select name="arch" id="arch" ng-model="search.cond_arch" ng-change="addArch(search.cond_arch)" style="width: 300px;">
+							<ui-select-match placeholder="Select types...">{{search.cond_arch}}</ui-select-match>
+							<ui-select-choices repeat="arch in arches | filter:$select.search">
+								{{arch}}
+							</ui-select-choices>
+						</ui-select>
+					</div>
+					<div class="form-group col-md-6">
+						<label>Technologies/Resources</label>
+						<tags-input ng-model="search.tags"></tags-input>
+					</div>				
+		</div>
+		<div class="row">
+			<div class="form-group col-md-6">
+				<input type="text" style="padding: 5px 2px; line-height: 28px;" placeholder="Input author or title" ng-model="search.keywords">
+			</div>
+			<div class="form-group col-md-6">
+				<button type="submit" class="btn btn-info">Find!</button>
+			</div>
+		</div>
+	</form>
+    </div>
+	</div>
+	
+	<div class="recoms list-group" data-ng-show="recoms.length">
+	<ul>
+    <li data-ng-repeat="recom in recoms" class="list-group-item">
+      <p class="bg-info"><span>{{recom.created | date:'medium'}}</span> /
+      <span>{{recom.user.name}}</span></p>
+      <h2 class="row">
+        <a class="col-md-8" data-ng-href="#!/recommendations/{{recom._id}}">{{recom.title}}</a>
+		<!--<rating class="col-md-4" ng-model="recom.rate" max="max" readonly="true">-->
+      </h2>
+	  <div>
+	  <span class="badge pull-right"><strong>Author:</strong> {{recom.author}}</span>
+	  <span class="badge pull-right"><strong>Appointment:</strong> {{recom.appointment}}</span>
+	  <span class="badge pull-right"><strong>Acceptable phases:</strong> {{recom.cond_phases.join('; ')}}</span>
+	  </div>
+		<div class="recommendation">
+			<p ng-bind-html="renderHtml(recom.content)"></p>
+		</div>
+    </li>
+  </ul>
+  </div>
+</section>

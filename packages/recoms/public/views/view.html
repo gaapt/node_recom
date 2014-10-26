@@ -1,30 +1,35 @@
 <section data-ng-controller="RecomsController" data-ng-init="findOne()">
-<div class="panel panel-default">
+<div class="panel panel-default" style="box-shadow: 0 0 10px rgba(0,0,0,0.5);">
 <div class="panel-heading">
 <div class="row">
-<div class="col-md-8"><h2>{{recom.title}}</h2></div>
+<div class="col-md-8"><h2>{{rec.title}}</h2></div>
 <div class="col-md-4"><br \><rating ng-model="mark" max="max" readonly="isReadonly"  data-ng-click="setMark(mark)"></rating>&nbsp&nbsp&nbspYour mark/Rate: <b>{{mark}}/{{rate}}</b></div>
 </div>
 </div>
  <div class="panel-body">
-	<span>{{recom.created | date:'medium'}}</span> /
-	<span>{{recom.user.name}}</span>
-	<div data-ng-if="hasAuthorization(recom)">
-		<a class="btn" href="/#!/recommendations/{{recom._id}}/edit">
+	<span>{{rec.created | date:'medium'}}</span> /
+	<span>{{rec.user.name}}</span>
+	<div data-ng-if="hasAuthorization(rec)">
+		<a class="btn" href="/#!/recommendations/{{rec._id}}/edit">
 			<i class="glyphicon glyphicon-edit"></i>
 		</a>
-		<a class="btn" data-ng-click="remove(recom);">
+		<a class="btn" data-ng-click="remove(rec);">
 			<i class="glyphicon glyphicon-trash"></i>
 		</a>
 	</div>	
 	<div class="row">
-		<div class="col-md-4"><span class="label label-default"><strong>Author:</strong> {{recom.author}}</span></div>
-		<div class="col-md-4"><span class="label label-default"><strong>Appointment:</strong> {{recom.appointment}}</span></div>
-		<div class="col-md-4"><span class="label label-default"><strong>Acceptable phases:</strong> {{recom.cond_phases.join('; ')}}</span></div>
-		<div class="col-md-4"><span class="label label-default" data-ng-if="recom.cond_arch"><strong>Acceptable architecture:</strong> {{recom.cond_arch}}</span></div>
-		<div class="col-md-4"><span class="label label-default" data-ng-if="recom.cond_tech"><strong>Acceptable technologies:</strong> {{recom.cond_tech.join('; ')}}</span></div>
+		<div class="col-md-6"><span class="label label-default"><strong>Author:</strong> {{rec.author}}</span></div>
+		<div class="col-md-6"><span class="label label-default"><strong>Appointment:</strong> {{rec.appointment}}</span></div>
+		<div class="col-md-6"><span class="label label-default"><strong>Acceptable phases:</strong> {{rec.cond_phases.join('; ')}}</span></div>
+		<div class="col-md-6"><span class="label label-default" data-ng-if="rec.cond_arch"><strong>Acceptable architecture:</strong> {{rec.cond_arch}}</span></div>
+		<div class="col-md-6"><span class="label label-default" data-ng-if="rec.cond_tech"><strong>Acceptable technologies:</strong> {{rec.cond_tech.join('; ')}}</span></div>
+		<div class="col-md-6"><span class="label label-default" data-ng-if="rec.req_resources"><strong>Required resources:</strong> {{rec.req_resources.join('; ')}}</span></div>
+		<div class="col-md-6"><span class="label label-default" data-ng-if="rec.consequences_use"><strong>The consequences from the using:</strong> {{rec.consequences_use}}</span></div>
+		<div class="col-md-6"><span class="label label-default" data-ng-if="rec.consequences_noneuse"><strong>The consequences from the rejection:</strong> {{rec.consequences_noneuse}}</span></div>
 	</div><br \>
-	<div>{{recom.content}}</div>
+	<div class="recommendation">
+		<p ng-bind-html="renderHtml(rec.content)"></p>
+	</div>
   </div>
 </div>
 </section>

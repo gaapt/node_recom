@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('mean.recoms').controller('RecomsController', ['$scope', '$stateParams', '$location', '$http', '$log', 'modalService', 'Global', 'Recoms',
-		function ($scope, $stateParams, $location, $http, $log, modalService, Global, Recoms) {
+angular.module('mean.recoms').controller('RecomsController', ['$scope', '$stateParams', '$location', '$http', '$log', '$sce', 'modalService', 'Global', 'Recoms',
+		function ($scope, $stateParams, $location, $http, $log, $sce, modalService, Global, Recoms) {
 			$scope.global = Global;
 			$scope.rec = {};
 
@@ -16,13 +16,13 @@ angular.module('mean.recoms').controller('RecomsController', ['$scope', '$stateP
 					var recom = new Recoms({
 							title : this.rec.title,
 							author : this.rec.author,
-							appointment : this.rec.appointment.name,
+							appointment : this.rec.appointment,
 							cond_phases : this.rec.cond_phase,
 							cond_arch : this.rec.cond_arch,
 							cond_tech : this.rec.cond_tech,
 							req_resources : this.rec.req_resources,
 							consequences_use : this.rec.consequences_use,
-							consequences_nonuse : this.rec.consequences_nonuse,
+							consequences_noneuse : this.rec.consequences_noneuse,
 							content : this.rec.content
 						});
 					recom.$save(function (response) {
@@ -38,7 +38,10 @@ angular.module('mean.recoms').controller('RecomsController', ['$scope', '$stateP
 
 			$scope.remove = function (recom) {
 				if (recom) {
-					recom.$remove();
+					//recom.$remove();
+					Recoms.remove({
+						recomId : recom._id
+					});
 
 					for (var i in $scope.recoms) {
 						if ($scope.recoms[i] === recom) {
@@ -54,15 +57,18 @@ angular.module('mean.recoms').controller('RecomsController', ['$scope', '$stateP
 
 			$scope.update = function (isValid) {
 				if (isValid) {
-					var recom = $scope.recom;
+					//$log.warn($scope.rec);
+					var recom = $scope.rec;
+					recom.user = recom.user._id;
 					if (!recom.updated) {
 						recom.updated = [];
 					}
 					recom.updated.push(new Date().getTime());
 
-					recom.$update(function () {
-						$location.path('recommendations/' + recom._id);
-					});
+					Recoms.update({
+						recomId : recom._id
+					}, recom);
+					$location.path('recommendations/' + recom._id);
 				} else {
 					$scope.submitted = true;
 				}
@@ -74,7 +80,7 @@ angular.module('mean.recoms').controller('RecomsController', ['$scope', '$stateP
 				});*/
 				$http.get('/api/getAllWithMarks')
 				.success(function (data) {
-					$log.info(data);
+					//$log.info(data);
 					$scope.recoms = data;
 				}).error(function (data, status) {
 					if (status === 500)
@@ -83,10 +89,22 @@ angular.module('mean.recoms').controller('RecomsController', ['$scope', '$stateP
 			};
 
 			$scope.findOne = function () {
-				Recoms.get({
+				/*Recoms.get({
 					recomId : $stateParams.recomId
 				}, function (recom) {
+					$log.info(recom);
 					$scope.recom = recom;
+				});*/
+				$http.get('/api/getRecom', {
+					params : {
+						recId: $stateParams.recomId
+					}
+				}).success(function (data) {
+					$log.info(data);
+					$scope.rec = data;
+				}).error(function (data, status) {
+					if (status === 500)
+						$log.error('error :(');
 				});
 			};
 
@@ -172,5 +190,9 @@ angular.module('mean.recoms').controller('RecomsController', ['$scope', '$stateP
 						$log.error('error :(');
 				});
 			}
+			
+			$scope.renderHtml = function(html_code) {
+				return $sce.trustAsHtml(html_code);
+			};
 		}
 	]);

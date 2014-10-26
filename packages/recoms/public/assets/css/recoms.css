@@ -4,3 +4,17 @@ h1 {
 ul.articles li:not(:last-child) {
 	border-bottom: 1px solid #ccc
 }
+
+h2 {
+	font-family: Georgia, 'Times New Roman', Times, serif;
+	font-variant: small-caps;
+	font-weight: 600;
+}
+
+.recommendation {
+	text-align: justify;
+	padding: 20px;
+	background: azure;
+	/*box-shadow: 0 0 10px rgba(0,0,0,0.5);*/
+	font-style: italic;
+}
