@@ -13,7 +13,7 @@ var mean = require('meanio'),
   methodOverride = require('method-override'),
   assetmanager = require('assetmanager'),
   session = require('express-session'),
-  mongoStore = require('connect-mongo')(session),
+  mongoStore = require('connect-mongostore')(session),
   helpers = require('view-helpers'),
   flash = require('connect-flash'),
   config = mean.loadConfig();
@@ -79,11 +79,16 @@ module.exports = function(app, passport, db) {
   app.use(session({
     secret: config.sessionSecret,
     store: new mongoStore({
-      db: db.connection.db,
-      collection: config.sessionCollection
+      db: 'admin',
+      host: '23.252.108.196',
+      port: 27017,
+      username: 'Nikita',
+      password: '65536',
+      collection: config.sessionCollection,
+      auto_reconnect: true
     }),
     cookie: config.sessionCookie,
-    name: config.sessionName,
+    //name: config.sessionName,
     resave: true,
     saveUninitialized: true
   }));

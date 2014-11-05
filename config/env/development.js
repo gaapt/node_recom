@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = {
-  db: 'mongodb://localhost/recbase',
+  db: 'mongodb://Nikita:65536@23.252.108.196:27017/recbase',
   mongoose: {
     debug: true
   },
