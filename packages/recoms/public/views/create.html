@@ -67,7 +67,7 @@
 		<div class="form-group" ng-class="{ 'has-error' : submitted && recomForm.arch.$invalid }">
 			<label mean-token="'create-arch'" class="col-md-3 control-label">Architecture type</label>
 			<div class="col-md-9">
-				<ui-select name="arch" id="arch" ng-model="rec.cond_arch" ng-change="addArch(rec.cond_arch)" style="width: 300px;">
+				<ui-select name="arch" id="arch" ng-model="rec.cond_arch" ng-change="addArch(rec.cond_arch)" style="width: 300px;" popover="What kind of architecture should be in system for this recommendation?" popover-trigger="mouseenter">
 					<ui-select-match placeholder="Select types...">{{rec.cond_arch}}</ui-select-match>
 					<ui-select-choices repeat="arch in arches | filter:$select.search">
 						{{arch}}

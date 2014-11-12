@@ -8,7 +8,7 @@
         <div class="row">
 					<div class="form-group col-md-6">
 						<label>Appointment</label>
-						<ui-select name="appointment" id="appointment" ng-model="search.appointment" ng-change="addAppointment(search.appointment)" style="width: 300px;">
+						<ui-select name="appointment" id="appointment" ng-model="search.appointment" ng-change="addAppointment(search.appointment)" popover="What is the purpose of this recommendation?" popover-trigger="mouseenter" style="width: 300px;border-radius:5px;">
 							<ui-select-match placeholder="Select appointment...">{{search.appointment}}</ui-select-match>
 							<ui-select-choices repeat="appointment in appointments | filter:$select.search">
 								{{appointment}}
@@ -17,7 +17,7 @@
 					</div>
 					<div class="form-group col-md-6">
 						<label>Phases</label>
-						<ui-select name="phase" id="phase" multiple ng-model="search.cond_phase" style="width: 300px;" popover="Which of software development stages are applicable for this recommendation?" popover-trigger="mouseenter" required>
+						<ui-select name="phase" id="phase" multiple ng-model="search.cond_phase" style="width: 300px;border-radius:5px;" popover="Which of software development stages are applicable for this recommendation?" popover-trigger="mouseenter" required>
 							<ui-select-match placeholder="Select phases...">{{$item}}</ui-select-match>
 							<ui-select-choices repeat="phase in phases | filter:$select.search">
 								{{phase}}
@@ -28,7 +28,7 @@
 		<div class="row">
 					<div class="form-group col-md-6">
 						<label>Architecture</label>
-						<ui-select name="arch" id="arch" ng-model="search.cond_arch" ng-change="addArch(search.cond_arch)" style="width: 300px;">
+						<ui-select name="arch" id="arch" ng-model="search.cond_arch" ng-change="addArch(search.cond_arch)" style="width: 300px;border-radius:5px;" popover="What kind of architecture should be in system for this recommendation?" popover-trigger="mouseenter">
 							<ui-select-match placeholder="Select types...">{{search.cond_arch}}</ui-select-match>
 							<ui-select-choices repeat="arch in arches | filter:$select.search">
 								{{arch}}
@@ -37,15 +37,16 @@
 					</div>
 					<div class="form-group col-md-6">
 						<label>Technologies/Resources</label>
-						<tags-input ng-model="search.tags"></tags-input>
+						<tags-input ng-model="search.tags" style="width:300px;" popover="What technologies should be used for this recommendation?" popover-trigger="mouseenter"></tags-input>
 					</div>				
 		</div>
 		<div class="row">
 			<div class="form-group col-md-6">
-				<input type="text" style="padding: 5px 2px; line-height: 28px;" placeholder="Input author or title" ng-model="search.keywords">
+				<label style="margin-right:40px;">Search on titles, authors and contents</label>
+				<input type="text" style="padding: 5px 2px;line-height:24px;width:300px;" placeholder="title, author or keyword from content" ng-model="search.keywords">
 			</div>
 			<div class="form-group col-md-6">
-				<button type="submit" class="btn btn-info">Find!</button>
+				<button type="submit" class="btn btn-info" style="margin-top:25px;width:300px;border-radius:5px;">FIND !</button>
 			</div>
 		</div>
 	</form>

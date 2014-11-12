@@ -1,0 +1,8 @@
+{
+    "name": "recoms",
+    "version": "0.1",
+    "dependencies": {
+        "ui-select": "latest",
+		"ng-tags-input": "latest"
+    }
+}

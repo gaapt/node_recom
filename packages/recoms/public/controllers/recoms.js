@@ -110,7 +110,7 @@ angular.module('mean.recoms').controller('RecomsController', ['$scope', '$stateP
 
 			$scope.appointments = ['Technical', 'Management', '--Other--'];
 			$scope.phases = ['Preliminary analysis', 'Requirements definition', 'System design', 'Development', 'Integration and testing', 'Acceptance, installation, deployment', 'Maintenance', 'Evaluation', 'Disposal'];
-			$scope.arches = ['Monolith', 'Client-server', '--Other--'];
+			$scope.arches = ['All', 'Monolith', 'Client-server', '--Other--'];
 			$scope.rec.cond_tech = ['NodeJS', 'OOP', 'AOP'];
 			$scope.rec.req_resources = ['Time', 'Money'];
 

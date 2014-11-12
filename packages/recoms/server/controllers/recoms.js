@@ -24,7 +24,7 @@ exports.recom = function (req, res, next, id) {
 
 exports.getRecom = function (req, res) {
 	var recId = req.query.recId;
-	if(!recId) {
+	if (!recId) {
 		res.render('error', {
 			status : 500
 		});
@@ -43,7 +43,10 @@ exports.getRecom = function (req, res) {
 		if (!recom) {
 			return res.jsonp('empty result');
 		}
-		recom.user = {_id : recom.user._id, name : recom.user.name};
+		recom.user = {
+			_id : recom.user._id,
+			name : recom.user.name
+		};
 		res.jsonp(recom);
 	});
 };
@@ -133,17 +136,19 @@ exports.allWithMarks = function (req, res) {
 				error : 'Cannot list the recommendations'
 			});
 		}
-		_.forEach(recoms, function(item, index) {
+		_.forEach(recoms, function (item, index) {
 			var recId = item._id;
 			Mark
-			.aggregate({ 
-				'$group': {
-					'_id': '$rec', 
-					'rate': { '$avg': '$what_set' } 
+			.aggregate({
+				'$group' : {
+					'_id' : '$rec',
+					'rate' : {
+						'$avg' : '$what_set'
+					}
 				}
 			}, {
-				'$match': {
-					'_id': recId
+				'$match' : {
+					'_id' : recId
 				}
 			})
 			.exec(function (err, recs) {
@@ -152,11 +157,15 @@ exports.allWithMarks = function (req, res) {
 						error : err
 					});
 				}
-				if(recs.length === 0)
-					_.assign(item, { 'rate' : 0 });
+				if (recs.length === 0)
+					_.assign(item, {
+						'rate' : 0
+					});
 				else
-					_.assign(item, { 'rate' : recs[0].rate });
-				if (index === recoms.length-1) {						
+					_.assign(item, {
+						'rate' : recs[0].rate
+					});
+				if (index === recoms.length - 1) {
 					res.json(recoms);
 				}
 			});
@@ -197,10 +206,12 @@ exports.setMark = function (req, res) {
 				_id : m._id,
 				who_set : req.user._id
 			}, {
-				$set : {'what_set' : req.query.mark}
+				$set : {
+					'what_set' : req.query.mark
+				}
 			})
 			.exec(function (err) {
-				if(err) {
+				if (err) {
 					return res.json(500, {
 						error : err
 					});
@@ -239,17 +250,19 @@ exports.getMark = function (req, res) {
 };
 
 exports.getRate = function (req, res) {
-	var ObjectId = mongoose.Types.ObjectId; 
+	var ObjectId = mongoose.Types.ObjectId;
 	var recId = new ObjectId(req.query.recId);
 	Mark
-	.aggregate({ 
-		'$group': {
-			'_id': '$rec', 
-			'rate': { '$avg': '$what_set' } 
+	.aggregate({
+		'$group' : {
+			'_id' : '$rec',
+			'rate' : {
+				'$avg' : '$what_set'
+			}
 		}
 	}, {
-		'$match': {
-			'_id': recId
+		'$match' : {
+			'_id' : recId
 		}
 	})
 	.exec(function (err, mark) {
@@ -267,20 +280,44 @@ exports.getRate = function (req, res) {
 
 exports.findRecoms = function (req, res) {
 	var searchQuery = req.body.search;
-	if(!searchQuery) {
+	var tags = _.map(searchQuery.tags, 'text');
+	if (!searchQuery) {
 		res.render('error', {
 			status : 500
 		});
 	}
 	Recom
-	.find({})
-	.or([
-		{'title' : {'$regex': searchQuery.keywords}},
-		{'author' : {'$regex': searchQuery.keywords}},
-		{'content' : {'$regex': searchQuery.keywords}}
-	])
-	.exec(function(err, recoms) {
-		if(err) {
+	.find({
+		$and : [{
+				$or : [{
+						'title' : {
+							'$regex' : new RegExp(searchQuery.keywords, 'i')
+						}
+					}, {
+						'author' : {
+							'$regex' : new RegExp(searchQuery.keywords, 'i')
+						}
+					}, {
+						'content' : {
+							'$regex' : new RegExp(searchQuery.keywords, 'i')
+						}
+					}
+				]
+			}, {
+				'cond_phases' : {
+					$all : searchQuery.cond_phase
+				}
+			}, {
+				'appointment' : searchQuery.appointment
+			}, {
+				'cond_tech' : {
+					$all : tags
+				}
+			}
+		]
+	})
+	.exec(function (err, recoms) {
+		if (err) {
 			res.render('error', {
 				status : 500
 			});
