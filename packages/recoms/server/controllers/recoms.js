@@ -281,47 +281,62 @@ exports.getRate = function (req, res) {
 exports.findRecoms = function (req, res) {
 	var searchQuery = req.body.search;
 	var tags = _.map(searchQuery.tags, 'text');
+
 	if (!searchQuery) {
 		res.render('error', {
 			status : 500
 		});
 	}
-	Recom
-	.find({
-		$and : [{
-				$or : [{
-						'title' : {
-							'$regex' : new RegExp(searchQuery.keywords, 'i')
-						}
-					}, {
-						'author' : {
-							'$regex' : new RegExp(searchQuery.keywords, 'i')
-						}
-					}, {
-						'content' : {
-							'$regex' : new RegExp(searchQuery.keywords, 'i')
-						}
+
+	var query = {};
+
+	query.$and = [];
+	if (typeof searchQuery.keywords !== 'undefined' && searchQuery.keywords.trim() !== '')
+		query.$and.push({
+			$or : [{
+					'title' : {
+						'$regex' : new RegExp(searchQuery.keywords, 'i')
 					}
-				]
-			}, {
-				'cond_phases' : {
-					$all : searchQuery.cond_phase
+				}, {
+					'author' : {
+						'$regex' : new RegExp(searchQuery.keywords, 'i')
+					}
+				}, {
+					'content' : {
+						'$regex' : new RegExp(searchQuery.keywords, 'i')
+					}
 				}
-			}, {
-				'appointment' : searchQuery.appointment
-			}, {
-				'cond_tech' : {
-					$all : tags
-				}
+			]
+		});
+	if (typeof searchQuery.cond_phase !== 'undefined' && searchQuery.cond_phase.length > 0)
+		query.$and.push({
+			'cond_phases' : {
+				$all : searchQuery.cond_phase
 			}
-		]
-	})
-	.exec(function (err, recoms) {
-		if (err) {
-			res.render('error', {
-				status : 500
-			});
-		}
-		res.jsonp(recoms);
-	});
+		});
+	if (typeof searchQuery.appointment !== 'undefined')
+		query.$and.push({
+			'appointment' : searchQuery.appointment
+		});
+	if (typeof tags !== 'undefined' && tags.length > 0)
+		query.$and.push({
+			'cond_tech' : {
+				$all : tags
+			}
+		});
+	if (query.$and.length > 0) {
+		Recom
+		.find(query)
+		.exec(function (err, recoms) {
+			console.log(err);
+			if (err) {
+				return res.render('error', {
+					status : 500
+				});
+			}
+			return res.jsonp(recoms);
+		});
+	} else {
+		return res.jsonp([]);
+	}
 };
