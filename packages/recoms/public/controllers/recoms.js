@@ -4,12 +4,15 @@ angular.module('mean.recoms').controller('RecomsController', ['$scope', '$stateP
 		function ($scope, $stateParams, $location, $http, $log, $sce, modalService, Global, Recoms) {
 			$scope.global = Global;
 			$scope.rec = {};
+			$scope.isSent = false;
 
 			$scope.hasAuthorization = function (recom) {
 				if (!recom || !recom.user)
 					return false;
 				return $scope.global.isAdmin || recom.user._id === $scope.global.user._id;
 			};
+
+			$scope.feedbacks = [];
 
 			$scope.create = function (isValid) {
 				if (isValid) {
@@ -76,7 +79,7 @@ angular.module('mean.recoms').controller('RecomsController', ['$scope', '$stateP
 
 			$scope.find = function () {
 				/*Recoms.query(function (recoms) {
-					$scope.recoms = recoms;
+				$scope.recoms = recoms;
 				});*/
 				$http.get('/api/getAllWithMarks')
 				.success(function (data) {
@@ -90,14 +93,14 @@ angular.module('mean.recoms').controller('RecomsController', ['$scope', '$stateP
 
 			$scope.findOne = function () {
 				/*Recoms.get({
-					recomId : $stateParams.recomId
+				recomId : $stateParams.recomId
 				}, function (recom) {
-					$log.info(recom);
-					$scope.recom = recom;
+				$log.info(recom);
+				$scope.recom = recom;
 				});*/
 				$http.get('/api/getRecom', {
 					params : {
-						recId: $stateParams.recomId
+						recId : $stateParams.recomId
 					}
 				}).success(function (data) {
 					$log.info(data);
@@ -143,7 +146,7 @@ angular.module('mean.recoms').controller('RecomsController', ['$scope', '$stateP
 					});
 				}
 			};
-			
+
 			$scope.max = 10;
 			$scope.isReadonly = false;
 
@@ -161,12 +164,12 @@ angular.module('mean.recoms').controller('RecomsController', ['$scope', '$stateP
 						$log.error('error :(');
 				});
 			}
-			
+
 			$scope.setMark = function (m) {
 				$http.get('/api/setMark', {
 					params : {
 						mark : m,
-						recId: $stateParams.recomId
+						recId : $stateParams.recomId
 					}
 				}).success(function (data) {
 					//$log.info(data);
@@ -176,11 +179,11 @@ angular.module('mean.recoms').controller('RecomsController', ['$scope', '$stateP
 						$log.error('error :(');
 				});
 			};
-			
+
 			function getRate() {
 				$http.get('/api/getRate', {
 					params : {
-						recId: $stateParams.recomId
+						recId : $stateParams.recomId
 					}
 				}).success(function (data) {
 					//$log.info(data);
@@ -190,9 +193,52 @@ angular.module('mean.recoms').controller('RecomsController', ['$scope', '$stateP
 						$log.error('error :(');
 				});
 			}
-			
-			$scope.renderHtml = function(html_code) {
+
+			$scope.renderHtml = function (html_code) {
 				return $sce.trustAsHtml(html_code);
+			};
+
+			$scope.formatDate = function (date) {
+				var temp = new Date(date);
+				return temp.toLocaleString();
+			};
+
+			$scope.leaveFeedback = function (mood, comment) {
+				$http({
+					url : '/api/feedback',
+					method : 'POST',
+					data : {
+						rec : $stateParams.recomId,
+						mood : mood,
+						comment : comment
+					}
+				})
+				.success(function (response) {
+					//$log.info('success');
+					$scope.initFeedbacks();
+					$scope.isSent = true;
+				})
+				.error(function (response) {
+					$log.error('error');
+				});
+			};
+
+			$scope.initFeedbacks = function () {
+				$http.get('/api/feedbacks', {
+					params : {
+						recId : $stateParams.recomId
+					}
+				}).success(function (data) {
+					//$log.info(data);
+					$scope.feedbacks = data;
+				}).error(function (data, status) {
+					if (status === 500)
+						$log.error('error :(');
+				});
+			};
+			
+			$scope.closeAlert = function () {
+				$scope.isSent = false;
 			};
 		}
 	]);

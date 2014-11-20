@@ -1,35 +1,137 @@
 <section data-ng-controller="RecomsController" data-ng-init="findOne()">
-<div class="panel panel-default" style="box-shadow: 0 0 10px rgba(0,0,0,0.5);">
-<div class="panel-heading">
-<div class="row">
-<div class="col-md-8"><h2>{{rec.title}}</h2></div>
-<div class="col-md-4"><br \><rating ng-model="mark" max="max" readonly="isReadonly"  data-ng-click="setMark(mark)"></rating>&nbsp&nbsp&nbspYour mark/Rate: <b>{{mark}}/{{rate}}</b></div>
-</div>
-</div>
- <div class="panel-body">
-	<span>{{rec.created | date:'medium'}}</span> /
-	<span>{{rec.user.name}}</span>
-	<div data-ng-if="hasAuthorization(rec)">
-		<a class="btn" href="/#!/recommendations/{{rec._id}}/edit">
-			<i class="glyphicon glyphicon-edit"></i>
-		</a>
-		<a class="btn" data-ng-click="remove(rec);">
-			<i class="glyphicon glyphicon-trash"></i>
-		</a>
-	</div>	
-	<div class="row">
-		<div class="col-md-6"><span class="label label-default"><strong>Author:</strong> {{rec.author}}</span></div>
-		<div class="col-md-6"><span class="label label-default"><strong>Appointment:</strong> {{rec.appointment}}</span></div>
-		<div class="col-md-6"><span class="label label-default"><strong>Acceptable phases:</strong> {{rec.cond_phases.join('; ')}}</span></div>
-		<div class="col-md-6"><span class="label label-default" data-ng-if="rec.cond_arch"><strong>Acceptable architecture:</strong> {{rec.cond_arch}}</span></div>
-		<div class="col-md-6"><span class="label label-default" data-ng-if="rec.cond_tech"><strong>Acceptable technologies:</strong> {{rec.cond_tech.join('; ')}}</span></div>
-		<div class="col-md-6"><span class="label label-default" data-ng-if="rec.req_resources"><strong>Required resources:</strong> {{rec.req_resources.join('; ')}}</span></div>
-		<div class="col-md-6"><span class="label label-default" data-ng-if="rec.consequences_use"><strong>The consequences from the using:</strong> {{rec.consequences_use}}</span></div>
-		<div class="col-md-6"><span class="label label-default" data-ng-if="rec.consequences_noneuse"><strong>The consequences from the rejection:</strong> {{rec.consequences_noneuse}}</span></div>
-	</div><br \>
-	<div class="recommendation">
-		<p ng-bind-html="renderHtml(rec.content)"></p>
+	<div class="panel panel-default" style="box-shadow: 0 0 10px rgba(0,0,0,0.5);">
+		<div class="panel-heading">
+			<div class="row">
+				<div class="col-md-8">
+					<h2>{{rec.title}}</h2>
+				</div>
+				<div class="col-md-4">
+					<br \>
+					<rating ng-model="mark" max="max" readonly="isReadonly"  data-ng-click="setMark(mark)"></rating>
+					&nbsp&nbsp&nbspYour mark/Rate: <b>{{mark}}/{{rate}}</b>
+				</div>
+			</div>
+		</div>
+		<div class="panel-body">
+			<span>{{rec.created | date:'medium'}}</span>
+			/
+			<span>{{rec.user.name}}</span>
+			<div data-ng-if="hasAuthorization(rec)">
+				<a class="btn" href="/#!/recommendations/{{rec._id}}/edit"> <i class="glyphicon glyphicon-edit"></i>
+				</a>
+				<a class="btn" data-ng-click="remove(rec);"> <i class="glyphicon glyphicon-trash"></i>
+				</a>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<span class="label label-default"> <strong>Author:</strong>
+						{{rec.author}}
+					</span>
+				</div>
+				<div class="col-md-6">
+					<span class="label label-default"> <strong>Appointment:</strong>
+						{{rec.appointment}}
+					</span>
+				</div>
+				<div class="col-md-6">
+					<span class="label label-default">
+						<strong>Acceptable phases:</strong>
+						{{rec.cond_phases.join('; ')}}
+					</span>
+				</div>
+				<div class="col-md-6">
+					<span class="label label-default" data-ng-if="rec.cond_arch">
+						<strong>Acceptable architecture:</strong>
+						{{rec.cond_arch}}
+					</span>
+				</div>
+				<div class="col-md-6">
+					<span class="label label-default" data-ng-if="rec.cond_tech">
+						<strong>Acceptable technologies:</strong>
+						{{rec.cond_tech.join('; ')}}
+					</span>
+				</div>
+				<div class="col-md-6">
+					<span class="label label-default" data-ng-if="rec.req_resources">
+						<strong>Required resources:</strong>
+						{{rec.req_resources.join('; ')}}
+					</span>
+				</div>
+				<div class="col-md-6">
+					<span class="label label-default" data-ng-if="rec.consequences_use">
+						<strong>The consequences from the using:</strong>
+						{{rec.consequences_use}}
+					</span>
+				</div>
+				<div class="col-md-6">
+					<span class="label label-default" data-ng-if="rec.consequences_noneuse">
+						<strong>The consequences from the rejection:</strong>
+						{{rec.consequences_noneuse}}
+					</span>
+				</div>
+			</div>
+			<br \>
+			<div class="recommendation">
+				<p ng-bind-html="renderHtml(rec.content)"></p>
+			</div>
+		</div>
 	</div>
-  </div>
-</div>
+	<div class="row">
+		<div class="col-md-6" data-ng-init="initFeedbacks()">
+			<h2 class="text-center">Feedbacks from users</h2>
+			<blockquote data-ng-if="feedbacks.length" data-ng-repeat="feedback in feedbacks">
+				<div class="row">
+					<div class="col-sm-3 text-center">
+						<p class="text-center">{{feedback.author.name}}</p>
+						<img data-ng-if="feedback.mood === 'good'" class="img-circle" src="recoms/assets/img/thumbs-up.png" style="width: 100px;height:100px;">
+						<img data-ng-if="feedback.mood === 'bad'" class="img-circle" src="recoms/assets/img/thumbs-down.png" style="width: 100px;height:100px;"></div>
+					<div class="col-sm-9">
+						<br />
+						<p data-ng-class="{true : 'text-success', false : 'text-danger'}[feedback.mood === 'good']"><em>{{feedback.comment}}</em></p>
+						<hr />
+						<small class="text-right">{{formatDate(feedback.when)}}</small>
+					</div>
+				</div>
+			</blockquote>
+			<div data-ng-if="feedbacks.length === 0">
+				<br />
+				<p class="bg-info">There are no feedbacks for this recommendation.</p>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<br />
+			<div data-ng-if="!isSent" class="well well-sm">
+				<form class="form-horizontal" data-ng-submit="leaveFeedback(mood, comment);">
+					<fieldset>
+						<legend class="text-center">Leave your feedback</legend>
+						<div class="form-group">
+							<label class="col-md-3 control-label" for="email">Mood</label>
+							<div class="controls col-md-9">
+								<select id="selectbasic" name="selectbasic" class="input-xlarge form-control" data-ng-model="mood" required>
+									<option value="" style="display:none;"></option>
+									<option>good</option>
+									<option>bad</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 control-label" for="message">Your message</label>
+							<div class="col-md-9">
+								<textarea class="form-control" id="message" name="message" placeholder="Please enter your message here..." rows="5" data-ng-model="comment" required></textarea>
+							</div>
+						</div>
+						<!-- Form actions -->
+						<div class="form-group">
+							<div class="col-md-12 text-right">
+								<button type="submit" class="btn btn-primary btn-lg">Submit</button>
+							</div>
+						</div>
+					</fieldset>
+				</form>
+			</div>
+			<alert data-ng-if="isSent" type="success" close="closeAlert()" style="height:150px;">
+				<h2 class="text-center">Thank you for your feedback!</h2>
+			</alert>
+		</div>
+	</div>
 </section>

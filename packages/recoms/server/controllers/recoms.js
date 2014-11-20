@@ -58,6 +58,7 @@ exports.create = function (req, res) {
 	var recom = new Recom(req.body);
 	recom.user = req.user;
 	recom.cond_tech = _.map(recom.cond_tech, 'text');
+	recom.req_resources = _.map(recom.cond_tech, 'text');
 
 	recom.save(function (err) {
 		if (err) {
@@ -76,9 +77,11 @@ exports.create = function (req, res) {
  */
 exports.update = function (req, res) {
 	var recom = req.recom;
-
 	recom = _.extend(recom, req.body);
-
+	if (recom.cond_tech)
+		recom.cond_tech = _.map(recom.cond_tech, 'text');
+	if (recom.req_resources)
+		recom.req_resources = _.map(recom.req_resources, 'text');
 	recom.save(function (err) {
 		if (err) {
 			console.log(err);
@@ -280,7 +283,7 @@ exports.getRate = function (req, res) {
 
 exports.findRecoms = function (req, res) {
 	var searchQuery = req.body.search;
-	var tags = _.map(searchQuery.tags, 'text');
+	var tags = searchQuery.tags; //_.map(searchQuery.tags, 'text');
 
 	if (!searchQuery) {
 		res.render('error', {
@@ -328,7 +331,7 @@ exports.findRecoms = function (req, res) {
 		Recom
 		.find(query)
 		.exec(function (err, recoms) {
-			console.log(err);
+			//console.log(err);
 			if (err) {
 				return res.render('error', {
 					status : 500
@@ -339,4 +342,17 @@ exports.findRecoms = function (req, res) {
 	} else {
 		return res.jsonp([]);
 	}
+};
+
+exports.getAllTags = function (req, res) {
+	Recom
+	.find()
+	.distinct('cond_tech')
+	.exec(function (error, vals) {
+		if (error) {
+			return res.status(500).send(error);
+		} else {
+			return res.jsonp(vals);
+		}
+	});
 };

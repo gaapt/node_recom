@@ -1,6 +1,7 @@
 'use strict';
 
 var recoms = require('../controllers/recoms');
+var feedbacks = require('../controllers/feedbacks');
 
 // Recommendation authorization helpers
 var hasAuthorization = function(req, res, next) {
@@ -24,7 +25,10 @@ module.exports = function(Articles, app, auth) {
   app.route('/api/getRate').get(auth.requiresLogin, hasAuthorization, recoms.getRate);
   app.route('/api/getMark').get(auth.requiresLogin, hasAuthorization, recoms.getMark);
   app.route('/api/setMark').get(auth.requiresLogin, hasAuthorization, recoms.setMark);
+  app.route('/api/getAllTags').get(auth.requiresLogin, hasAuthorization, recoms.getAllTags);
   app.route('/api/findRecoms').post(recoms.findRecoms);
+  app.route('/api/feedbacks').get(auth.requiresLogin, hasAuthorization, feedbacks.feedbacks);
+  app.route('/api/feedback').post(auth.requiresLogin, hasAuthorization, feedbacks.create);
 
   // Finish with setting up the recomId param
   app.param('recomId', recoms.recom);
