@@ -14,7 +14,7 @@
 		<div class="form-group" ng-class="{ 'has-error' : submitted && recomForm.title.$invalid }">
 			<label mean-token="'create-title'" class="col-md-3 control-label">Title*</label>
 			<div class="col-md-9">
-				<input name="title" type="text" class="form-control" data-ng-model="rec.title" id="title" placeholder="Title" popover="Enter the title of recommendation here" popover-trigger="focus" required>
+				<input name="title" type="text" class="form-control" data-ng-model="rec.title" id="title" placeholder="Title" popover="Enter the title of recommendation here" popover-trigger="mouseenter" required>
 				<div ng-show="submitted && recomForm.title.$invalid" class="help-block">
 					<p ng-show="recomForm.title.$error.required">Title is required</p>
 				</div>
@@ -23,7 +23,7 @@
 		<div class="form-group" ng-class="{ 'has-error' : submitted && recomForm.author.$invalid }">
 			<label mean-token="'create-author'" class="col-md-3 control-label">Author*</label>
 			<div class="col-md-9">
-				<input name="author" type="text" class="form-control" data-ng-model="rec.author" id="author" placeholder="Author" popover="Enter the real author name of recommendation here" popover-trigger="focus" required>
+				<input name="author" type="text" class="form-control" data-ng-model="rec.author" id="author" placeholder="Author" popover="Enter the real author name of recommendation here" popover-trigger="mouseenter" required>
 				<div ng-show="submitted && recomForm.author.$invalid" class="help-block">
 					<p ng-show="recomForm.author.$error.required">Author is required</p>
 				</div>
@@ -32,7 +32,7 @@
 		<div class="form-group" ng-class="{ 'has-error' : submitted && recomForm.appointment.$invalid }">
 			<label mean-token="'create-appointment'" class="col-md-3 control-label">Appointment*</label>
 			<div class="col-md-9">
-				<ui-select name="appointment" id="appointment" ng-model="rec.appointment" ng-change="addAppointment(rec.appointment)" popover="What is the purpose of this recommendation?" popover-trigger="focus" style="width: 300px;" required>
+				<ui-select name="appointment" id="appointment" ng-model="rec.appointment" ng-change="addAppointment(rec.appointment)" popover="What is the purpose of this recommendation?" popover-trigger="mouseenter" style="width: 300px;" required>
 					<ui-select-match placeholder="Select appointment...">{{rec.appointment}}</ui-select-match>
 					<ui-select-choices repeat="appointment in appointments | filter:$select.search">
 						{{appointment}}
@@ -81,6 +81,8 @@
 		</div>
 		</div>
 		</div>
+	</div>
+	<div class="col-md-6">
 		<div class="panel panel-default">
 		<div class="panel-heading">Additional information:</div>
 		<div class="panel-body">
@@ -93,34 +95,39 @@
 		<div class="form-group">
 			<label mean-token="'create-consequences_use'" for="consequences_use" class="col-md-3 control-label">The consequences from the using</label>
 			<div class="col-md-9">
-				<textarea name="consequences_use" data-ng-model="rec.consequences_use" id="consequences_use" cols="30" rows="3" placeholder="..." class="form-control" popover="Describe the possible consequences that may result from the use of this recommendation" popover-trigger="focus"></textarea>
+				<textarea name="consequences_use" data-ng-model="rec.consequences_use" id="consequences_use" cols="30" rows="6" placeholder="..." class="form-control" popover="Describe the possible consequences that may result from the use of this recommendation" popover-trigger="mouseenter"></textarea>
 			</div>
 		</div>		
 		<div class="form-group">
 			<label mean-token="'create-consequences_noneuse'" for="consequences_noneuse" class="col-md-3 control-label">The consequences from the rejection</label>
 			<div class="col-md-9">
-				<textarea name="consequences_noneuse" data-ng-model="rec.consequences_noneuse" id="consequences_noneuse" cols="30" rows="3" placeholder="..." class="form-control" popover="Describe the possible consequences that may result in the rejection of this recommendation" popover-trigger="focus"></textarea>
+				<textarea name="consequences_noneuse" data-ng-model="rec.consequences_noneuse" id="consequences_noneuse" cols="30" rows="6" placeholder="..." class="form-control" popover="Describe the possible consequences that may result in the rejection of this recommendation" popover-trigger="mouseenter"></textarea>
 			</div>
 		</div>	
 		</div>
 		</div>
 	</div>
-	<div class="col-md-6">
+	<div class="col-md-12">
+		<div class="panel panel-default">
+		<div class="panel-heading">Content:</div>
+		<div class="panel-body">
 		<div class="form-group" ng-class="{ 'has-error' : submitted && recomForm.content.$invalid }">
-			<label mean-token="'create-content'" for="content" class="col-md-3 control-label">Content*</label>
 			<div class="col-md-9">
-				<textarea name="content" data-ng-model="rec.content" id="content" cols="30" rows="35" placeholder="Content" class="form-control" popover="Describe the essence of the recommendations" popover-trigger="focus" required></textarea>
+				<!--<textarea name="content" data-ng-model="rec.content" id="content" cols="30" rows="35" placeholder="Content" class="form-control" popover="Describe the essence of the recommendations" popover-trigger="mouseenter" required></textarea>-->
+				<div text-angular data-ng-model="rec.content" popover="Describe the essence of the recommendations" popover-trigger="mouseenter" style="width:1076px;" required></div>
 				<div ng-show="submitted && recomForm.content.$invalid" class="help-block">
 					<p ng-show="recomForm.content.$error.required">Content is required</p>
 				</div>
 			</div>
-		</div>		
-		<div class="form-group">
-			<div class="col-md-offset-3 col-md-9">
+		</div>
+		</div>
+		</div>
+	</div>
+	<div class="form-group">
+			<div class="col-md-offset-10 col-md-9">
 				<button type="submit" class="btn btn-info">Submit</button>
 			</div>
 		</div>
-	</div>
 	</div>
   </form>
 </div>

@@ -1,3 +1,3 @@
 'use strict';
 
-angular.module('mean.recoms', ['ui.select', 'ngTagsInput']);
+angular.module('mean.recoms', ['ui.select', 'ngTagsInput', 'ngDragDrop', 'textAngular']);

@@ -58,7 +58,7 @@ exports.create = function (req, res) {
 	var recom = new Recom(req.body);
 	recom.user = req.user;
 	recom.cond_tech = _.map(recom.cond_tech, 'text');
-	recom.req_resources = _.map(recom.cond_tech, 'text');
+	recom.req_resources = _.map(recom.req_resources, 'text');
 
 	recom.save(function (err) {
 		if (err) {

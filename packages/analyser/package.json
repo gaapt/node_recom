@@ -1,0 +1,15 @@
+{
+  "name": "analyser",
+  "version": "0.0.1",
+  "description": "Some description of analyser",
+  "author": {
+    "name": "Nikita Malik"
+  },
+  "mean": "0.4.0",
+  "engines": {
+    "node": "0.10.x",
+    "npm": "1.4.x"
+  },
+  "dependencies": {},
+  "license": "MIT"
+}

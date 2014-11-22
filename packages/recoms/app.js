@@ -33,19 +33,13 @@ Recoms.register(function (app, auth, database) {
 		'link' : 'find recommendation'
 	});
 	
-	Recoms.angularDependencies(['ui.select', 'ngTagsInput']);
+	Recoms.angularDependencies(['ui.select', 'ngTagsInput', 'ngDragDrop', 'textAngular']);
 
 	Recoms.aggregateAsset('css', 'recoms.css');
 	Recoms.aggregateAsset('css', 'bower_components/angular-ui-select/dist/select.min.css');
 	Recoms.aggregateAsset('css', 'bower_components/ng-tags-input/ng-tags-input.min.css');
 	Recoms.aggregateAsset('css', 'bower_components/ng-tags-input/ng-tags-input.bootstrap.min.css');
-	
-	Recoms.aggregateAsset('js', '../lib/ng-tags-input/ng-tags-input.min.js', {
-		global:true
-	});
-	Recoms.aggregateAsset('js', '../lib/angular-ui-select/dist/select.min.js', {
-		global:true
-	});
+	Recoms.aggregateAsset('css', 'bower_components/textAngular/src/textAngular.css');
 
 	return Recoms;
 });

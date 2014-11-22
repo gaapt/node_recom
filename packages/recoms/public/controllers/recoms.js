@@ -103,7 +103,7 @@ angular.module('mean.recoms').controller('RecomsController', ['$scope', '$stateP
 						recId : $stateParams.recomId
 					}
 				}).success(function (data) {
-					$log.info(data);
+					//$log.info(data);
 					$scope.rec = data;
 				}).error(function (data, status) {
 					if (status === 500)
@@ -236,9 +236,14 @@ angular.module('mean.recoms').controller('RecomsController', ['$scope', '$stateP
 						$log.error('error :(');
 				});
 			};
-			
+
 			$scope.closeAlert = function () {
 				$scope.isSent = false;
 			};
+
+			$scope.list1 = {
+				title : 'AngularJS - Drag Me'
+			};
+			$scope.list2 = {};
 		}
 	]);
