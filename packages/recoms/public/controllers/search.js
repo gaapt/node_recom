@@ -48,5 +48,9 @@ angular.module('mean.recoms').controller('SearchController', ['$scope', '$stateP
 			$scope.closeAlert = function (i) {
 				$scope.alert = false;
 			};
+			
+			$scope.clearSearchBox = function () {
+				$scope.search = {};
+			};
 		}
 	]);

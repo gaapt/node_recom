@@ -1,7 +1,7 @@
 <section data-ng-controller="SearchController">
 	<div class="panel panel-default" >
       <div class="panel-heading">
-        Search panel
+        Search panel <i data-ng-click="clearSearchBox()" class="glyphicon glyphicon-list-alt" style="cursor:pointer;float:right;" popover="Clear search box" popover-trigger="mouseenter"></i>
       </div>
       <div class="panel-body">
 	  <form data-ng-submit="find()">
