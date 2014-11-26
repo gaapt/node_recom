@@ -6,6 +6,8 @@
 var mongoose = require('mongoose'),
 Recom = mongoose.model('Recom'),
 Mark = mongoose.model('Mark'),
+Search = mongoose.model('Search'),
+Estimation = mongoose.model('Estimation'),
 _ = require('lodash');
 
 /**
@@ -177,6 +179,18 @@ exports.allWithMarks = function (req, res) {
 };
 
 exports.setMark = function (req, res) {
+	if (!req.query.recId || !req.query.mark)
+		return res.status(500).send('Empty query');
+	new Estimation({
+		user : req.user._id,
+		recom : req.query.recId,
+		mark : req.query.mark
+	}).save(function (err) {
+		if (err)
+			console.log(err);
+		else
+			console.log('estimation analyser info inserted');
+	});
 	Mark
 	.findOne({
 		rec : req.query.recId,
@@ -337,10 +351,12 @@ exports.findRecoms = function (req, res) {
 					status : 500
 				});
 			}
-			return res.jsonp(recoms);
+			res.jsonp(recoms);
+			return exports.sendSearchResults(req.user._id, searchQuery, _.map(recoms, '_id'));
 		});
 	} else {
-		return res.jsonp([]);
+		res.jsonp([]);
+		return exports.sendSearchResults(req.user._id, searchQuery, []);
 	}
 };
 
@@ -353,6 +369,22 @@ exports.getAllTags = function (req, res) {
 			return res.status(500).send(error);
 		} else {
 			return res.jsonp(vals);
+		}
+	});
+};
+
+exports.sendSearchResults = function (uid, query, results) {
+	var search = {
+		user : uid,
+		query : query,
+		results : results
+	};
+	var s = new Search(search);
+	s.save(function (err) {
+		if (err) {
+			console.log(err);
+		} else {
+			console.log('search analyser info inserted');
 		}
 	});
 };

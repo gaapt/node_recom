@@ -19,14 +19,12 @@ angular.module('mean.recoms').controller('SearchController', ['$scope', '$stateP
 					data: { 'search' : $scope.search }
 				})
 				.then(function(response) {
-					$log.info(response);
+					//$log.info(response);
 					if(response.data.length === 0) {
 						$scope.recoms = [];
 						$scope.alert = {type: 'info', text: 'Nothing was found'};
 					} else
 						$scope.recoms = response.data;
-				}, function(response) {
-					$log.info(response);
 				});
 			};
 			

@@ -17,12 +17,12 @@ Analyser.register(function (app, auth, database) {
 	Analyser.routes(app, auth, database);
 
 	//We are adding a link to the main menu for all authenticated users
-	Analyser.menus.add({
+	/*Analyser.menus.add({
 		title : 'Analyser Manager',
 		link : 'analyser page',
 		roles : ['admin'],
 		menu : 'main'
-	});
+	});*/
 
 	Analyser.angularDependencies(['textAngular']);
 	Analyser.aggregateAsset('css', 'analyser.css');

@@ -24,8 +24,7 @@ var SearchSchema = new Schema({
 			required : true
 		},
 		results : {
-			type : Array,
-			required : true
+			type : Array
 		}
 	});
 

@@ -15,6 +15,11 @@ var EstimationSchema = new Schema({
 			ref : 'User',
 			required : true
 		},
+		recom : {
+			type : Schema.ObjectId,
+			ref : 'Recom',
+			required : true
+		},
 		time : {
 			type : Date,
 			default : Date.now

@@ -5,7 +5,8 @@
  */
 var mongoose = require('mongoose'),
 //Recom = mongoose.model('Recom'),
-Feedback = mongoose.model('Feedback');
+Feedback = mongoose.model('Feedback'),
+Commentation = mongoose.model('Commentation');
 //_ = require('lodash');
 
 exports.create = function (req, res) {
@@ -21,12 +22,21 @@ exports.create = function (req, res) {
 			});
 		}
 		res.json(feedback);
-
+		new Commentation({
+			user : req.user._id,
+			recom : feedback.rec,
+			mood : feedback.mood
+		}).save(function (err) {
+			if (err)
+				console.log(err);
+			else
+				console.log('commentation analyser info inserted');
+		});
 	});
 };
 
 exports.feedbacks = function (req, res) {
-	if(!req.query.recId) {
+	if (!req.query.recId) {
 		return res.status(500).send('Empty request');
 	}
 	Feedback
@@ -34,8 +44,8 @@ exports.feedbacks = function (req, res) {
 		rec : req.query.recId
 	})
 	.populate('author')
-	.exec(function(err, feedbacks) {
-		if(err) {
+	.exec(function (err, feedbacks) {
+		if (err) {
 			return res.status(500).send(err);
 		} else {
 			return res.jsonp(feedbacks);
