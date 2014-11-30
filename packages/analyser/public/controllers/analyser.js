@@ -16,7 +16,7 @@ angular.module('mean.analyser').controller('AnalyserController', ['$scope', '$ht
         	icon: 'glyphicon glyphicon-random'
         }, {
         	title: 'Search',
-        	html: 'analyser/views/mining.html',
+        	html: 'analyser/views/searches.html',
         	icon: 'glyphicon glyphicon-search'
         }, {
         	title: 'Estimations',
