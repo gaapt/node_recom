@@ -1,8 +1,10 @@
 'use strict';
 
-var analyser = require('../controllers/analyser.js');
-var transAnayser = require('../controllers/transitions.js');
-var searchAnalyser = require('../controllers/searches.js');
+var analyser = require('../controllers/analyser.js'),
+    transAnayser = require('../controllers/transitions.js'),
+    searchAnalyser = require('../controllers/searches.js'),
+    estimAnalyser = require('../controllers/estimations.js'),
+    commAnalyser = require('../controllers/comments.js');
 
 // The Package is past automatically as first parameter
 module.exports = function(Analyser, app, auth, database) {
@@ -20,4 +22,8 @@ module.exports = function(Analyser, app, auth, database) {
         .get(auth.requiresAdmin, transAnayser.analyseTransitions);
     app.route('/api/analyseSearches')
         .get(auth.requiresAdmin, searchAnalyser.analyseSearches);
+    app.route('/api/analyseEstimations')
+        .get(auth.requiresAdmin, estimAnalyser.analyseEstimations);
+    app.route('/api/analyseComments')
+        .get(auth.requiresAdmin, commAnalyser.analyseComments);
 };

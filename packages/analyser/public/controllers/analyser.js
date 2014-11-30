@@ -20,11 +20,11 @@ angular.module('mean.analyser').controller('AnalyserController', ['$scope', '$ht
         	icon: 'glyphicon glyphicon-search'
         }, {
         	title: 'Estimations',
-        	html: 'analyser/views/mining.html',
+        	html: 'analyser/views/estimations.html',
         	icon: 'glyphicon glyphicon-certificate'
         }, {
         	title: 'Commentating',
-        	html: 'analyser/views/index.html',
+        	html: 'analyser/views/commentations.html',
         	icon: 'glyphicon glyphicon-pencil'
         }];
 

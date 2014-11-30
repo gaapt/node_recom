@@ -1,0 +1,6 @@
+<div class="" data-ng-controller="EstimationController">
+    <div cg-busy="{promise:getAnalystInfo,message:'Loading. Please wait...',backdrop:false,delay:300,minDuration:700}"></div>
+    <div class="row" data-ng-repeat="config in configs">
+        <highchart id="chart{{$index}}" config="config" class="span10"></highchart>
+    </div>
+</div>

@@ -8,9 +8,24 @@ var mongoose = require('mongoose'),
     Transition = mongoose.model('Transition'),
     Search = mongoose.model('Search'),
     Estimation = mongoose.model('Estimation'),
-    Commentation = mongoose.model('Commentation');
+    Commentation = mongoose.model('Commentation'),
     //User = mongoose.model('User'),
-    //_ = require('lodash');
+    _ = require('lodash');
+
+function queryToString(query) {
+    var queryString = '';
+    if (typeof query.keywords !== 'undefined' && query.keywords.trim() !== '')
+        queryString += 'Keywords: \"' + query.keywords + '\"';
+    if (typeof query.cond_phase !== 'undefined' && query.cond_phase.length > 0)
+        queryString += (queryString === '' ? '' : '; ') + 'Phases: \"' + query.cond_phase.join('; ') + '\"';
+    if (typeof query.appointment !== 'undefined')
+        queryString += (queryString === '' ? '' : '; ') + 'Appointment: \"' + query.appointment + '\"';
+    if (typeof query.cond_arch !== 'undefined')
+        queryString += (queryString === '' ? '' : '; ') + 'Architecture: \"' + query.cond_arch + '\"';
+    if (typeof query.tags !== 'undefined' && query.tags.length > 0)
+        queryString += (queryString === '' ? '' : '; ') + 'Tags: \"' + query.tags + '\"';
+    return queryString;
+}
 
 exports.createTransition = function(req, res) {
     if (!req.body)
@@ -71,6 +86,7 @@ exports.searches = function(req, res) {
     var page = req.query.curPage;
     Search
         .find({})
+        .lean()
         .skip((page - 1) * 5)
         .limit(5)
         //.populate('user')
@@ -86,7 +102,12 @@ exports.searches = function(req, res) {
                     if (err) {
                         return res.status(500).send(err);
                     } else {
-                        return res.jsonp([searches, count]);
+                        var results = _.map(searches, function(s) {
+                            s.query = queryToString(s.query);
+                            s.results = s.results ? s.results.length : 0;
+                            return s;
+                        });
+                        return res.jsonp([results, count]);
                     }
                 });
             }
