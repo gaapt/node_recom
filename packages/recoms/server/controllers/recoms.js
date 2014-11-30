@@ -335,6 +335,10 @@ exports.findRecoms = function (req, res) {
 		query.$and.push({
 			'appointment' : searchQuery.appointment
 		});
+	if (typeof searchQuery.cond_arch !== 'undefined')
+		query.$and.push({
+			'cond_arch' : searchQuery.cond_arch
+		});
 	if (typeof tags !== 'undefined' && tags.length > 0)
 		query.$and.push({
 			'cond_tech' : {
@@ -364,11 +368,29 @@ exports.getAllTags = function (req, res) {
 	Recom
 	.find()
 	.distinct('cond_tech')
-	.exec(function (error, vals) {
+	.exec(function (error, tags) {
 		if (error) {
 			return res.status(500).send(error);
 		} else {
-			return res.jsonp(vals);
+			Recom
+			.find()
+			.distinct('cond_arch')
+			.exec(function (error, arches) {
+				if (error) {
+					return res.status(500).send(error);
+				} else {
+					Recom
+					.find()
+					.distinct('appointment')
+					.exec(function (error, appointments) {
+						if (error) {
+							return res.status(500).send(error);
+						} else {
+							return res.jsonp([tags, arches, appointments]);
+						}
+					});
+				}
+			});
 		}
 	});
 };

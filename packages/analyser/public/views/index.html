@@ -1,4 +1,49 @@
 <div class="" data-ng-controller="AnalyserController">
-	in progress
+	<div class="row">
+		<div class="col-sm-3">
+			<h3> <i class="glyphicon glyphicon-cog"></i>
+				Analyser
+			</h3>
+			<hr />
+			<ul class="nav nav-pills nav-stacked">
+				<li role="presentation" data-ng-repeat="menuItem in menuItems" data-ng-click="selectMenuItem(menuItem.html, $index)" data-ng-class="{true: '', false: 'active'}[selected === -1 || selected !== $index]">
+					<a href=""><i class="{{menuItem.icon}}"></i>
+						&nbsp {{menuItem.title}}
+					</a>
+				</li>
+			</ul>
+			<hr />
+			<div class="btn-group btn-group-justified">
+				<a href="#" class="btn btn-info col-sm-3">
+					<i class="glyphicon glyphicon-plus"></i>
+					<br>Service</a>
+				<a href="#" class="btn btn-info col-sm-3">
+					<i class="glyphicon glyphicon-cloud"></i>
+					<br>Cloud</a>
+				<a href="#" class="btn btn-info col-sm-3">
+					<i class="glyphicon glyphicon-cog"></i>
+					<br>Tools</a>
+				<a href="#" class="btn btn-info col-sm-3">
+					<i class="glyphicon glyphicon-question-sign"></i>
+					<br>Help</a>
+			</div>
+		</div>
+		<div class="col-sm-9">
+			<h3>
+				<i class="glyphicon glyphicon-dashboard"></i>
+				Dashboard
+			</h3>
+			<hr />
+			<div data-ng-if="!includePath" class="jumbotron" style="padding-left: 15px;margin-top:">
+				<h2 style="float: left;">
+					<i class="glyphicon glyphicon-arrow-left jumbotron"></i>
+				</h2>
+				<h2>Base Recommendations Analyser</h2>
+				<p>
+					This control panel allows you to become familiar with statistical and analytical information on the current state of the database.
+				</p>
+			</div>
+			<div data-ng-include="includePath"></div>
+		</div>
+	</div>
 </div>
-

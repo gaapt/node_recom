@@ -1,31 +1,34 @@
 {
-  "core": {
-    "css": {
-      "bower_components/build/css/dist.min.css": [
-		"bower_components/angular-ui-select/dist/select.min.css",
-		"bower_components/ng-tags-input/ng-tags-input.min.css",
-		"bower_components/ng-tags-input/ng-tags-input.bootstrap.min.css"
-	  ]
-    },
-    "js": {
-      "bower_components/build/js/dist.min.js": [
-        "bower_components/jquery/dist/jquery.min.js",
-        "bower_components/angular/angular.js",
-        "bower_components/angular-mocks/angular-mocks.js",
-        "bower_components/angular-cookies/angular-cookies.js",
-        "bower_components/angular-resource/angular-resource.js",
-        "bower_components/angular-ui-router/release/angular-ui-router.js",
-        "bower_components/angular-bootstrap/ui-bootstrap.js",
-        "bower_components/angular-bootstrap/ui-bootstrap-tpls.js",
-		"bower_components/angular-ui-select/dist/select.min.js",
-		"bower_components/ng-tags-input/ng-tags-input.min.js",
-		"bower_components/textAngular/dist/textAngular.min.js",
-		"bower_components/textAngular/dist/textAngular-sanitize.min.js",
-		"bower_components/textAngular/dist/textAngular-rangy.min.js",
-		"bower_components/angular-dragdrop/src/angular-dragdrop.min.js",
-		"bower_components/jquery/dist/jquery.min.js",
-		"bower_components/jquery-ui/jquery-ui.min.js"
-      ]
+    "core": {
+        "css": {
+            "bower_components/build/css/dist.min.css": [
+                "bower_components/angular-ui-select/dist/select.min.css",
+                "bower_components/ng-tags-input/ng-tags-input.min.css",
+                "bower_components/ng-tags-input/ng-tags-input.bootstrap.min.css",
+                "bower_components/angular-busy/dist/angular-busy.min.css"
+            ]
+        },
+        "js": {
+            "bower_components/build/js/dist.min.js": [
+                "bower_components/jquery/dist/jquery.min.js",
+                "bower_components/angular/angular.js",
+                "bower_components/angular-mocks/angular-mocks.js",
+                "bower_components/angular-cookies/angular-cookies.js",
+                "bower_components/angular-resource/angular-resource.js",
+                "bower_components/angular-ui-router/release/angular-ui-router.js",
+                "bower_components/angular-bootstrap/ui-bootstrap.js",
+                "bower_components/angular-bootstrap/ui-bootstrap-tpls.js",
+                "bower_components/angular-ui-select/dist/select.min.js",
+                "bower_components/ng-tags-input/ng-tags-input.min.js",
+                "bower_components/textAngular/dist/textAngular.min.js",
+                "bower_components/textAngular/dist/textAngular-sanitize.min.js",
+                "bower_components/textAngular/dist/textAngular-rangy.min.js",
+                "bower_components/angular-dragdrop/src/angular-dragdrop.min.js",
+                "bower_components/jquery/dist/jquery.min.js",
+                "bower_components/jquery-ui/jquery-ui.min.js",
+                "bower_components/angular-busy/dist/angular-busy.min.js",
+                "bower_components/highcharts-ng/dist/highcharts-ng.min.js"
+            ]
+        }
     }
-  }
 }

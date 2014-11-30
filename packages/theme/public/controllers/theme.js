@@ -9,13 +9,14 @@ angular.module('mean.theme')
 				if ($scope.state === '') {
 					$scope.state = 'firstPage';
 				}
-
 				$http({
 					url : '/api/transition',
 					method : 'POST',
 					data : {
 						targetURL : toState.url,
-						prevURL : fromState.url
+						targetParams : toParams,
+						prevURL : fromState.url,
+						prevParams : fromParams
 					}
 				});
 				/*.success(function (response) {

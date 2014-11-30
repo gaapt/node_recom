@@ -24,9 +24,10 @@ Analyser.register(function (app, auth, database) {
 		menu : 'main'
 	});*/
 
-	Analyser.angularDependencies(['textAngular']);
+	Analyser.angularDependencies(['textAngular', 'cgBusy', 'highcharts-ng']);
 	Analyser.aggregateAsset('css', 'analyser.css');
 	Analyser.aggregateAsset('css', 'bower_components/textAngular/src/textAngular.css');
+	Analyser.aggregateAsset('css', 'angular-busy.min.css');
 
 	return Analyser;
 });

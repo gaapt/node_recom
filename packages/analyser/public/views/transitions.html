@@ -1,0 +1,36 @@
+<div class="" data-ng-controller="TransitionsController">
+	<div cg-busy="{promise:getAnalystInfo,message:'Loading. Please wait...',backdrop:false,delay:300,minDuration:700}"></div>
+	<div class="row" data-ng-repeat="config in configs">
+		<highchart id="chart{{$index}}" config="config" class="span10"></highchart>
+	</div>
+	<!--<div data-ng-repeat="table in tables" data-ng-init="tableIndex=$index">
+	<div data-ng-init="init(tableIndex)" class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">{{table.heading}}</h3>
+		</div>
+		<div class="panel-body">
+			<div cg-busy="{promise:table.promise,message:'Loading. Please wait...',backdrop:false,delay:300,minDuration:700}">
+				<table class="table table-bordered  table-hover table-condensed">
+					<thead>
+						<tr>
+							<th>#</th>
+							<th data-ng-repeat="field in table.fields">{{field.title}}</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr data-ng-repeat="item in table.collection">
+							<td>{{$index+1+(table.curPage-1)*5}}</td>
+							<td data-ng-repeat="field in table.fields">
+								<span data-ng-if="field.key === 'time'">{{item[field.key] | date:'hh:mm:ss a dd/MM/y'}}</span>
+								<span data-ng-if="field.key !== 'time'">{{item[field.key] ? item[field.key] : '---'}}</span>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<pagination total-items="table.collectionLength" data-ng-model="table.curPage" data-ng-change="init(tableIndex)" max-size="maxSize" class="pagination-sm" boundary-links="true" rotate="false"></pagination>
+			</div>
+		</div>
+	</div>
+</div>
+-->
+</div>
