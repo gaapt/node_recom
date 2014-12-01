@@ -78,14 +78,19 @@ exports.analyseEstimations = function(req, res, next) {
                 },
                 size: {}
             };
-            _.forEach(searches, function(s, index) {
-                config.xAxis.categories.push(s._id);
-                config.series[1].data.push([s.maxMark]);
-                config.series[0].data.push([s.avgMark]);
-                config.series[2].data.push([s.minMark]);
+            Estimation.populate(searches, {
+                path: '_id',
+                model: 'Recom'
+            }, function(err, estimates) {
+                _.forEach(estimates, function(e, index) {
+                    config.xAxis.categories.push(e._id.title);
+                    config.series[0].data.push([e.maxMark]);
+                    config.series[1].data.push([e.avgMark]);
+                    config.series[2].data.push([e.minMark]);
+                });
+                configs.push(config);
+                return res.jsonp(configs);
             });
-            configs.push(config);
         }
-        return res.jsonp(configs);
     });
 };

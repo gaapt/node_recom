@@ -28,7 +28,7 @@ exports.analyseTransitions = function(req, res, next) {
                     $push: {
                         url: '$targetURL',
                         time: '$time',
-                        params: '$targetParams'
+                        params: '$targetParams.recomId'
                     }
                 },
                 user: {
@@ -63,35 +63,43 @@ exports.analyseTransitions = function(req, res, next) {
                     enabled: false
                 }
             };
-            _.forEach(transitions, function(t, index) {
-                var ser = {
-                    name: 'Session ' + t._id + ' (user ' + t.user + ')',
-                    data: [],
-                    tooltip: {
-                        valueDecimals: 2
-                    },
-                    dashStyle: 'Dash',//'LongDashDot',
-                    type: 'spline'
-                };
-                _.forEach(t.serieData, function(pair, index2) {
-                    if (typeof pair.params === null || typeof pair.params === 'undefined' || typeof pair.params.recomId === 'undefined') {
-                        ser.data.push({
-                            x: Date.parse(pair.time), //index2,
-                            y: Math.random(),
-                            name: new Date(pair.time).format('dd/mm/yyyy HH:MM:ss') + ': ' + '(recommendation was removed)'
-                        });
-                    } else {
-                        ser.data.push({
-                            x: Date.parse(pair.time), //index2,
-                            y: Math.random(),
-                            name: new Date(pair.time).format('dd/mm/yyyy HH:MM:ss') + ': ' + '( recommendation ' + pair.params.recomId + ')'
-                        });
-                    }
+            Transition.populate(transitions, [{
+                path: 'user',
+                model: 'User'
+            }, {
+                path: 'serieData.params',
+                model: 'Recom'
+            }], function(err, transes) {
+                _.forEach(transes, function(t, index) {
+                    var ser = {
+                        name: 'Session ' + index + ' (user ' + t.user.name + ')',
+                        data: [],
+                        tooltip: {
+                            valueDecimals: 2
+                        },
+                        dashStyle: 'Dash', //'LongDashDot',
+                        type: 'spline'
+                    };
+                    _.forEach(t.serieData, function(pair, index2) {
+                        if (pair.params === null || typeof pair.params === 'undefined') {
+                            ser.data.push({
+                                x: Date.parse(pair.time), //index2,
+                                y: Math.random(),
+                                name: new Date(pair.time).format('dd/mm/yyyy HH:MM:ss') + ': ' + '(recommendation was removed)'
+                            });
+                        } else {
+                            ser.data.push({
+                                x: Date.parse(pair.time), //index2,
+                                y: Math.random(),
+                                name: new Date(pair.time).format('dd/mm/yyyy HH:MM:ss') + ': ' + '( recommendation ' + pair.params.title + ')'
+                            });
+                        }
+                    });
+                    config.series.push(ser);
                 });
-                config.series.push(ser);
+                configs.push(config);
+                return res.jsonp(configs);
             });
-            configs.push(config);
-            return res.jsonp(configs);
         }
     });
 };
