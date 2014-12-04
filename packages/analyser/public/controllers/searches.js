@@ -6,7 +6,7 @@ angular.module('mean.analyser').controller('SearchesController', ['$scope', '$ht
         $scope.configs = [];
 
         $scope.getAnalystInfo = $http.get('/api/analyseSearches').success(function(data) {
-            $log.info(data);
+            //$log.info(data);
             $scope.configs = data;
         }).error(function(err) {
             $log.info(err);

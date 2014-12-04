@@ -233,7 +233,7 @@ exports.analyseSearches = function(req, res, next) {
                                     type: 'pie'
                                 }],
                                 title: {
-                                    text: 'The most frequent unsuccessfull queries'
+                                    text: 'The most frequent unsuccessful queries'
                                 },
                                 loading: false,
                                 credits: {

@@ -81,13 +81,7 @@ exports.analyseTransitions = function(req, res, next) {
                         type: 'spline'
                     };
                     _.forEach(t.serieData, function(pair, index2) {
-                        if (pair.params === null || typeof pair.params === 'undefined') {
-                            ser.data.push({
-                                x: Date.parse(pair.time), //index2,
-                                y: Math.random(),
-                                name: new Date(pair.time).format('dd/mm/yyyy HH:MM:ss') + ': ' + '(recommendation was removed)'
-                            });
-                        } else {
+                        if (pair.params !== null && typeof pair.params !== 'undefined') {
                             ser.data.push({
                                 x: Date.parse(pair.time), //index2,
                                 y: Math.random(),

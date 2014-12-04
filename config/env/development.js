@@ -6,7 +6,7 @@ module.exports = {
     debug: true
   },
   app: {
-    name: 'Base Recommendations'
+    name: 'Base of Recommendations'
   },
   facebook: {
     clientID: '915768598451160',

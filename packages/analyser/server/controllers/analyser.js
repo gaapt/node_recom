@@ -123,7 +123,8 @@ exports.estimations = function(req, res) {
         .find({})
         .skip((page - 1) * 5)
         .limit(5)
-        //.populate('user')
+        .populate('recom')
+        .lean()
         .sort({
             time: -1,
             session: 1
@@ -136,7 +137,11 @@ exports.estimations = function(req, res) {
                     if (err) {
                         return res.status(500).send(err);
                     } else {
-                        return res.jsonp([estimations, count]);
+                        var results = _.map(estimations, function(e) {
+                            e.recom = e.recom.title;
+                            return e;
+                        });
+                        return res.jsonp([results, count]);
                     }
                 });
             }
@@ -152,7 +157,8 @@ exports.commentations = function(req, res) {
         .find({})
         .skip((page - 1) * 5)
         .limit(5)
-        //.populate('user')
+        .populate('recom')
+        .lean()
         .sort({
             time: -1,
             session: 1
@@ -165,7 +171,11 @@ exports.commentations = function(req, res) {
                     if (err) {
                         return res.status(500).send(err);
                     } else {
-                        return res.jsonp([commentations, count]);
+                        var results = _.map(commentations, function(c) {
+                            c.recom = c.recom.title;
+                            return c;
+                        });
+                        return res.jsonp([results, count]);
                     }
                 });
             }
