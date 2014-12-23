@@ -34,6 +34,7 @@ exports.analyseEstimations = function(req, res, next) {
             }
         }, {
             $sort: {
+                avgMark: -1,
                 count: -1
             }
         }]);

@@ -65,14 +65,6 @@ exports.transitions = function(req, res) {
                         return res.status(500).send(err);
                     } else {
                         return res.jsonp([transitions, count]);
-                        /*var result = _.chain(transitions)
-                            .groupBy('session')
-                            .pairs()
-                            .map(function(currentItem) {
-                                return _.object(_.zip(['session', 'transitions'], currentItem));
-                            })
-                            .value();
-                        return res.jsonp(result);*/
                     }
                 });
             }

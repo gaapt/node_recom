@@ -23,7 +23,7 @@ Recoms.register(function (app, auth, database) {
 		'link' : 'all recommendations'
 	});
 	Recoms.menus.add({
-		'roles' : ['authenticated'],
+		'roles' : ['admin'],
 		'title' : 'Create New',
 		'link' : 'create recommendation'
 	});

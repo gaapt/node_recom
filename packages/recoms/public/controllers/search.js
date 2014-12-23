@@ -43,7 +43,7 @@ angular.module('mean.recoms').controller('SearchController', ['$scope', '$stateP
 				return $sce.trustAsHtml(html_code);
 			};
 
-			/*$scope.addAppointment = function (option) {
+			$scope.addAppointment = function (option) {
 				if (option === '--Other--') {
 					var modalOptions = {
 						closeButtonText : 'Cancel',
@@ -71,7 +71,7 @@ angular.module('mean.recoms').controller('SearchController', ['$scope', '$stateP
 						$scope.arches.splice($scope.arches.length - 1, 0, result);
 					});
 				}
-			};*/
+			};
 
 			$scope.appointments = [];//['Technical', 'Management', '--Other--'];
 			$scope.phases = ['Preliminary analysis', 'Requirements definition', 'System design', 'Development', 'Integration and testing', 'Acceptance, installation, deployment', 'Maintenance', 'Evaluation', 'Disposal'];
@@ -81,8 +81,8 @@ angular.module('mean.recoms').controller('SearchController', ['$scope', '$stateP
 			.success(function (data) {
 				//$log.info(data);
 				$scope.tags = data[0];
-				$scope.arches = data[1];
-				$scope.appointments = data[2];
+				$scope.arches = data[1].concat(data[1].indexOf('--Other--') !== -1 ? [] : ['--Other--']);
+				$scope.appointments = data[2].concat(data[2].indexOf('--Other--') !== -1 ? [] : ['--Other--']);
 			}).error(function (data, status) {
 				if (status === 500)
 					$log.error('error :(');
