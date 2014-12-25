@@ -6,7 +6,7 @@
       <span>{{recom.user.name}}</span></p>
       <h2 class="row">
         <a class="col-md-8" data-ng-href="#!/recommendations/{{recom._id}}">{{recom.title}}</a>
-		<rating class="col-md-4" ng-model="recom.rate" max="max" readonly="true">
+		<rating class="col-md-4" data-ng-model="recom.rate" max="max" readonly="true">
       </h2>
 	  <div>
 	  <span data-ng-if="hasAuthorization(recom)">

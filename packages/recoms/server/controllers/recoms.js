@@ -155,8 +155,7 @@ exports.allWithMarks = function (req, res) {
 				'$match' : {
 					'_id' : recId
 				}
-			})
-			.exec(function (err, recs) {
+			}, function (err, recs) {
 				if (err) {
 					return res.json(500, {
 						error : err
