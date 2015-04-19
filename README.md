@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Base of Recommendations
 
 ## Prerequisites
@@ -117,3 +118,7 @@ To simply run tests
     $ npm test
 
 > NOTE: Running Node.js applications in the __production__ environment enables caching, which is disabled by default in all other environments.
+=======
+# node_recom
+Node.js recommendation
+>>>>>>> efdbcf61c4bdc2f3807600144cac8fddae3b5dfa
