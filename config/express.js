@@ -31,8 +31,6 @@ module.exports = function(app, passport, db) {
   // Should be placed before express.static
   // To ensure that all assets and data are compressed (utilize bandwidth)
   app.use(compression({
-    // Levels are specified in a range of 0 to 9, where-as 0 is
-    // no compression and 9 is best compression, but slowest
     level: 9
   }));
 
@@ -79,11 +77,11 @@ module.exports = function(app, passport, db) {
   app.use(session({
     secret: config.sessionSecret,
     store: new mongoStore({
-      db: 'admin',
-      host: '23.252.108.196',
+      db: '<yourdb>',
+      host: '<yourhost>',
       port: 27017,
-      username: 'Nikita',
-      password: '65536',
+      username: '<yourusername>',
+      password: '<yourpassword>',
       collection: config.sessionCollection,
       auto_reconnect: true
     }),
